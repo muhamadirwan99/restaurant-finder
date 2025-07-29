@@ -13,9 +13,11 @@ class BerandaController extends State<BerandaView> {
 
   // Search functionality
   TextEditingController searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
   List<Restaurants?>? allRestaurants;
   List<Restaurants?>? filteredRestaurants;
   List<Restaurants?>? featuredRestaurants; // Store featured restaurants once
+  bool isSearchFocused = false;
 
   getListRestaurant() async {
     try {
@@ -44,6 +46,202 @@ class BerandaController extends State<BerandaView> {
 
     // Set 3-4 random restaurants that won't change until next app restart
     featuredRestaurants = shuffled.take(4).toList();
+  }
+
+  // Skeleton loading for featured restaurants carousel
+  Widget buildFeaturedRestaurantsSkeleton() {
+    return SizedBox(
+      height: 150.0,
+      child: ListView.builder(
+        itemCount: 3,
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        itemBuilder: (context, index) {
+          return Container(
+            height: 150.0,
+            width: MediaQuery.of(context).size.width * 0.7,
+            margin: const EdgeInsets.only(right: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(16.0),
+              ),
+            ),
+            child: Stack(
+              children: [
+                // Main skeleton container
+                Container(
+                  height: 150.0,
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.grey[300]!,
+                        Colors.grey[200]!,
+                        Colors.grey[300]!,
+                      ],
+                      stops: const [0.0, 0.5, 1.0],
+                    ),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                ),
+                // Bottom overlay skeleton
+                Positioned(
+                  bottom: 12,
+                  left: 12,
+                  right: 12,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 14,
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Container(
+                            height: 12,
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            height: 12,
+                            width: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  // Skeleton loading for restaurant list
+  Widget buildRestaurantListSkeleton() {
+    return ListView.builder(
+      itemCount: 5,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
+            border: Border.all(
+              color: Colors.grey[300]!,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(12.0),
+            ),
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image skeleton
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title skeleton
+                    Container(
+                      height: 16,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    // City skeleton
+                    Container(
+                      height: 12,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(height: 6.0),
+                    // Description skeleton
+                    Container(
+                      height: 12,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(height: 4.0),
+                    Container(
+                      height: 12,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(height: 8.0),
+                    Row(
+                      children: [
+                        // Rating skeleton
+                        Container(
+                          height: 20,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        const Spacer(),
+                        // Arrow skeleton
+                        Container(
+                          height: 16,
+                          width: 16,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void searchRestaurants(String query) {
@@ -102,12 +300,22 @@ class BerandaController extends State<BerandaView> {
     searchController.addListener(() {
       searchRestaurants(searchController.text);
     });
+
+    // Listen to search focus changes
+    searchFocusNode.addListener(() {
+      if (isSearchFocused != searchFocusNode.hasFocus) {
+        isSearchFocused = searchFocusNode.hasFocus;
+        setState(() {});
+      }
+    });
+
     super.initState();
   }
 
   @override
   void dispose() {
     searchController.dispose();
+    searchFocusNode.dispose();
     super.dispose();
   }
 

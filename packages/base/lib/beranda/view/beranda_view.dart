@@ -2,22 +2,91 @@ import 'package:base/beranda/controller/beranda_controller.dart';
 import 'package:base/models/list_restaurant_model.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class BerandaView extends StatefulWidget {
   const BerandaView({super.key});
 
   Widget build(BuildContext context, BerandaController controller) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Beranda",
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.primary.withOpacity(0.8),
+                Theme.of(context).colorScheme.secondary,
+              ],
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 80,
+            automaticallyImplyLeading: false,
+            flexibleSpace: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.restaurant_menu,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Restaurant Finder",
+                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                "Discover amazing places to eat",
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontSize: 12,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
-        automaticallyImplyLeading: false,
-        // actions: const [
-        //   SwitchThemeWidget(),
-        //   SizedBox(width: 16.0),
-        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -30,11 +99,7 @@ class BerandaView extends StatefulWidget {
                 future: controller.dataFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container(
-                      height: 150.0,
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                      child: const Center(child: CircularProgressIndicator()),
-                    );
+                    return controller.buildFeaturedRestaurantsSkeleton();
                   } else if (snapshot.hasError) {
                     return Container(
                       height: 150.0,
@@ -100,25 +165,6 @@ class BerandaView extends StatefulWidget {
                                     height: 150.0,
                                     width: MediaQuery.of(context).size.width * 0.7,
                                     fit: BoxFit.cover,
-                                    loadingBuilder: (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      }
-                                      return Container(
-                                        height: 150.0,
-                                        width: MediaQuery.of(context).size.width * 0.7,
-                                        color: Colors.grey[200],
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            value: loadingProgress.expectedTotalBytes != null
-                                                ? loadingProgress.cumulativeBytesLoaded /
-                                                    loadingProgress.expectedTotalBytes!
-                                                : null,
-                                          ),
-                                        ),
-                                      );
-                                    },
                                     errorBuilder: (context, error, stackTrace) {
                                       return Container(
                                         height: 150.0,
@@ -274,6 +320,7 @@ class BerandaView extends StatefulWidget {
                     StatefulBuilder(builder: (context, setSearchState) {
                       return BaseForm(
                         textEditingController: controller.searchController,
+                        focusNode: controller.searchFocusNode,
                         hintText: "Search Restaurant by name or city...",
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: controller.searchController.text.isNotEmpty
@@ -291,8 +338,9 @@ class BerandaView extends StatefulWidget {
                       );
                     }),
                     const SizedBox(height: 12.0),
-                    // Popular cities chips
+                    // Popular cities chips - only show when search is focused and empty
                     if (controller.allRestaurants != null &&
+                        controller.isSearchFocused &&
                         controller.searchController.text.isEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,7 +416,7 @@ class BerandaView extends StatefulWidget {
                         future: controller.dataFuture,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const Center(child: CircularProgressIndicator());
+                            return controller.buildRestaurantListSkeleton();
                           } else if (snapshot.hasError) {
                             return Center(child: Text('Error: ${snapshot.error}'));
                           } else if (!snapshot.hasData || snapshot.data == null) {

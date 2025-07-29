@@ -1,6 +1,5 @@
 import 'package:base/layout/controller/main_layout_controller.dart';
 import 'package:base/profile/view/profile_view.dart';
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 class ProfileController extends State<ProfileView> {
