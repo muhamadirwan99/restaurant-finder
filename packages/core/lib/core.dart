@@ -19,6 +19,10 @@ export 'package:pull_to_refresh_new/pull_to_refresh.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'package:firebase_auth/firebase_auth.dart';
+export 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:google_sign_in/google_sign_in.dart';
 
 //Model
 export 'models/global_model.dart';
@@ -73,6 +77,7 @@ export 'utils/router_utils/router_utils.dart';
 export 'utils/get_image_from_asset/get_image_from_asset.dart';
 export 'utils/logout/logout.dart';
 export 'utils/json_utils/json_utils.dart';
+export 'utils/snack_bar/scaffold_message.dart';
 
 export 'media_res/media_res.dart';
 
@@ -117,6 +122,7 @@ export 'widgets/container/body_background.dart';
 export 'widgets/container/container_outline.dart';
 export 'widgets/container/container_date_picker.dart';
 export 'widgets/container/container_garis_putus_putus.dart';
+export 'widgets/container/container_logo.dart';
 export 'widgets/base_dialog/show_base_dialog_selesai.dart';
 export 'widgets/base_dialog/show_dialog_confirm.dart';
 export 'widgets/base_form/suggestion_form_field.dart';

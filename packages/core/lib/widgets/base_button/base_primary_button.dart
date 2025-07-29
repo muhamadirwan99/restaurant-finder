@@ -9,6 +9,7 @@ class BasePrimaryButton extends StatefulWidget {
   final Icon? suffixIcon;
   final bool? isDense;
   final double? height;
+  final double? borderRadius;
 
   const BasePrimaryButton({
     super.key,
@@ -18,6 +19,7 @@ class BasePrimaryButton extends StatefulWidget {
     this.suffixIcon,
     this.isDense,
     this.height,
+    this.borderRadius,
   });
 
   @override
@@ -38,11 +40,10 @@ class _BasePrimaryButtonState extends State<BasePrimaryButton> {
               : MaterialStatePropertyAll(Theme.of(context).disabledColor),
           shape: MaterialStatePropertyAll(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(widget.borderRadius ?? 8.0),
             ),
           ),
-          overlayColor: MaterialStateProperty.all<Color>(
-              Theme.of(context).primaryColorDark),
+          overlayColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColorDark),
         ),
         onPressed: widget.onPressed,
         child: Padding(
@@ -61,8 +62,7 @@ class _BasePrimaryButtonState extends State<BasePrimaryButton> {
                         child: widget.prefixIcon!,
                       )
                     : Container(),
-                widget.prefixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.prefixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )
@@ -80,8 +80,7 @@ class _BasePrimaryButtonState extends State<BasePrimaryButton> {
                         ),
                       )
                     : Container(),
-                widget.suffixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.suffixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )

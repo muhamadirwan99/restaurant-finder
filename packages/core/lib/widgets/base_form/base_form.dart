@@ -114,10 +114,7 @@ class _BaseFormState extends State<BaseForm> {
                         child: RichText(
                           text: TextSpan(
                             text: widget.label,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(
+                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                   color: isValid
                                       ? Theme.of(context).colorScheme.onSurface
                                       : Theme.of(context).colorScheme.error,
@@ -125,12 +122,8 @@ class _BaseFormState extends State<BaseForm> {
                             children: <TextSpan>[
                               TextSpan(
                                 text: ' *',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge
-                                    ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.error,
+                                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                      color: Theme.of(context).colorScheme.error,
                                     ),
                               ),
                             ],
@@ -141,10 +134,8 @@ class _BaseFormState extends State<BaseForm> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           widget.label!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
                                 color: isValid
                                     ? Theme.of(context).colorScheme.onSurface
                                     : Theme.of(context).colorScheme.error,
@@ -154,8 +145,7 @@ class _BaseFormState extends State<BaseForm> {
                 : Container();
           },
         ),
-        if (widget.helperMessage != null &&
-            widget.helperMessage!.isNotEmpty) ...[
+        if (widget.helperMessage != null && widget.helperMessage!.isNotEmpty) ...[
           const SizedBox(height: 2.0),
           Container(
             alignment: Alignment.centerLeft,
@@ -171,8 +161,7 @@ class _BaseFormState extends State<BaseForm> {
             ),
           ),
         ],
-        if (widget.label != null && widget.label!.isNotEmpty)
-          const SizedBox(height: 2.0),
+        if (widget.label != null && widget.label!.isNotEmpty) const SizedBox(height: 2.0),
         TextFormField(
           key: widget.keyForm,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -184,11 +173,8 @@ class _BaseFormState extends State<BaseForm> {
           autofocus: widget.autoFocus ?? false,
           focusNode: widget.focusNode,
           inputFormatters: widget.textInputFormater,
-          initialValue:
-              widget.initialValue?.isEmpty ?? true ? null : widget.initialValue,
-          controller: widget.initialValue?.isEmpty ?? true
-              ? widget.textEditingController
-              : null,
+          initialValue: widget.initialValue?.isEmpty ?? true ? null : widget.initialValue,
+          controller: widget.initialValue?.isEmpty ?? true ? widget.textEditingController : null,
           maxLines: widget.maxLines,
           maxLength: widget.maxLenght,
           textDirection: widget.textDirection,
@@ -202,8 +188,7 @@ class _BaseFormState extends State<BaseForm> {
           onEditingComplete: widget.onEditComplete,
           textAlign: widget.textAlign ?? TextAlign.start,
           decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 16),
             hintText: widget.enabled ?? true ? widget.hintText : "-",
             prefixIcon: widget.prefixIcon != null
                 ? Padding(
@@ -254,41 +239,37 @@ class _BaseFormState extends State<BaseForm> {
                 : Theme.of(context).colorScheme.tertiary,
             isDense: true,
             counterText: widget.haveCounter ?? false ? null : "",
-            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant),
+            hintStyle: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
             errorStyle: Theme.of(context)
                 .textTheme
                 .bodySmall
                 ?.copyWith(color: Theme.of(context).colorScheme.error),
             errorMaxLines: 1,
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.error, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.outline, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.error, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.outline, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.outline, width: 1),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
           ),

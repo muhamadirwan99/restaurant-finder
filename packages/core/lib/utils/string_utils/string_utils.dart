@@ -5,10 +5,8 @@ import 'package:core/core.dart';
 class StringUtils {
   static bool compareStrings(String str1, String str2) {
     // Mengubah kedua string menjadi lowercase dan menghilangkan spasi ekstra
-    String normalizedStr1 =
-        str1.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
-    String normalizedStr2 =
-        str2.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
+    String normalizedStr1 = str1.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
+    String normalizedStr2 = str2.toLowerCase().replaceAll(RegExp(r'\s+'), ' ').trim();
 
     // Membandingkan kedua string
     return normalizedStr1 == normalizedStr2;
@@ -76,8 +74,7 @@ class StringUtils {
     }
   }
 
-  static String formatNopol(
-      String? tnkbDaerah, String? tnkbSubDaerah, String? tnkbNomor) {
+  static String formatNopol(String? tnkbDaerah, String? tnkbSubDaerah, String? tnkbNomor) {
     return (trimString(tnkbDaerah).padRight(2, " ") +
             trimString(tnkbSubDaerah).padRight(3, " ") +
             trimString(tnkbNomor).padLeft(4, " "))
@@ -247,9 +244,8 @@ class StringUtils {
   static String capitalizeEachWord(String text) {
     return text
         .split(" ")
-        .map((word) => word.isNotEmpty
-            ? word[0].toUpperCase() + word.substring(1).toLowerCase()
-            : "")
+        .map((word) =>
+            word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : "")
         .join(" ");
   }
 
@@ -263,11 +259,7 @@ class StringUtils {
         trimString(noPolisi3).isEmpty) {
       return "-";
     }
-    return trimString(noPolisi1) +
-        " " +
-        trimString(noPolisi2) +
-        " " +
-        trimString(noPolisi3);
+    return trimString(noPolisi1) + " " + trimString(noPolisi2) + " " + trimString(noPolisi3);
   }
 
   static removeSlash(String? string) {
@@ -334,11 +326,9 @@ class StringUtils {
   }
 
   static int hitungDpp(String? nilaiJual, String bobot) {
-    dynamic result = (((int.tryParse(nilaiJual ?? "0") ?? 0) *
-                    (double.tryParse(bobot) ?? 0)) /
-                1000)
-            .round() *
-        1000;
+    dynamic result =
+        (((int.tryParse(nilaiJual ?? "0") ?? 0) * (double.tryParse(bobot) ?? 0)) / 1000).round() *
+            1000;
     return result;
   }
 
@@ -386,12 +376,10 @@ class StringUtils {
   static bool checkRole(String role, String reqRole) {
     bool isEnable = false;
     if (reqRole.contains(";")) {
-      List<String> parts =
-          reqRole.split(';').where((s) => (s).isNotEmpty).toList();
+      List<String> parts = reqRole.split(';').where((s) => (s).isNotEmpty).toList();
       if (parts.isNotEmpty) {
         for (var i = 0; i < parts.length; i++) {
-          if (StringUtils.trimString(parts[i]) ==
-              StringUtils.trimString(role)) {
+          if (StringUtils.trimString(parts[i]) == StringUtils.trimString(role)) {
             isEnable = true;
           }
         }
@@ -413,9 +401,7 @@ class StringUtils {
       List<String> parts = input.split('_');
       String camelCase = parts.first +
           parts.skip(1).map((String part) {
-            return part.isNotEmpty
-                ? part[0].toUpperCase() + part.substring(1)
-                : '';
+            return part.isNotEmpty ? part[0].toUpperCase() + part.substring(1) : '';
           }).join('');
       return camelCase;
     } catch (e) {
@@ -459,45 +445,8 @@ class StringUtils {
     return result;
   }
 
-  static int calcStringNumberV2(List<dynamic> items) {
-    return items.fold<int>(0, (sum, item) {
-      if (item == null) return sum;
-
-      // Handle numeric types directly
-      if (item is int) return sum + item;
-      if (item is double) return sum + item.toInt();
-
-      // Handle string conversion
-      if (item is String) {
-        return sum + (double.tryParse(item)?.toInt() ?? 0);
-      }
-
-      return sum;
-    });
-  }
-
-  static int calcStringNumberV3(List<dynamic> items) {
-    return items.fold<int>(0, (sum, item) {
-      if (item == null) return sum;
-
-      // Handle numeric types directly
-      if (item is int) return sum + item;
-      if (item is double) return sum + item.toInt();
-
-      // Handle string conversion
-      if (item is String) {
-        // Remove any thousand separators (dots)
-        String cleanString = item.replaceAll('.', '');
-        return sum + (double.tryParse(cleanString)?.toInt() ?? 0);
-      }
-
-      return sum;
-    });
-  }
-
   static String splitString(String? originalString, bool? isFirstString) {
-    if (originalString != null ||
-        StringUtils.trimString(originalString).isNotEmpty) {
+    if (originalString != null || StringUtils.trimString(originalString).isNotEmpty) {
       RegExp regExp = RegExp(r'^(.*?) - (.*?)$');
       Match? match = regExp.firstMatch(StringUtils.trimString(originalString));
 
@@ -534,9 +483,7 @@ class StringUtils {
   }
 
   static String mergeNomorPolisi(
-      {required String nopol1,
-      required String nopol2,
-      required String nopol3}) {
+      {required String nopol1, required String nopol2, required String nopol3}) {
     // Ensure each part meets the required length
     nopol1 = nopol1.padRight(2, ' '); // Make nopol1 exactly 2 characters
     nopol2 = nopol2.padRight(4, ' '); // Make nopol2 exactly 4 characters
@@ -560,8 +507,7 @@ class StringUtils {
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+';
     Random random = Random();
 
-    return List.generate(length, (index) => chars[random.nextInt(chars.length)])
-        .join();
+    return List.generate(length, (index) => chars[random.nextInt(chars.length)]).join();
   }
 
   static String handleSubString(String word, int end) {
