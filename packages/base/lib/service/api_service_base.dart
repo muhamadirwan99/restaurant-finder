@@ -44,7 +44,7 @@ class ApiServiceBase {
   }) async {
     try {
       final response = await client.apiCall(
-        url: Endpoints.detail + id,
+        url: "${Endpoints.detail}/$id",
         requestType: RequestType.get,
       );
 

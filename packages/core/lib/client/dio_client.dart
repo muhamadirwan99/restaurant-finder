@@ -13,7 +13,11 @@ class DioClient {
         receiveTimeout: Endpoints.receiveTimeout,
         responseType: ResponseType.json,
       ),
-    )..interceptors.addAll([DioInterceptors()]);
+    )..interceptors.addAll([
+        DioInterceptors(
+          isUseLogger: true,
+        )
+      ]);
   }
 
   late final Dio _dio;

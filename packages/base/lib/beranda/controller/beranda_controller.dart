@@ -289,8 +289,10 @@ class BerandaController extends State<BerandaView> {
   }
 
   goToDetailRestaurant(String id) {
-    // Navigate to restaurant detail page
-    // Get.toNamed("/restaurant/detail", arguments: {"id": id});
+    newRouter.push(
+      RouterUtils.detail,
+      extra: id,
+    );
   }
 
   @override

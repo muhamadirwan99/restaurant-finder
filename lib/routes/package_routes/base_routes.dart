@@ -24,4 +24,12 @@ final List<GoRoute> baseRoutes = [
       return MainLayoutView(initialIndex: initialIndex);
     },
   ),
+  GoRoute(
+    path: RouterUtils.detail,
+    builder: (BuildContext context, GoRouterState state) {
+      final String? id = state.extra as String?;
+
+      return DetailView(id: StringUtils.trimString(id));
+    },
+  ),
 ];

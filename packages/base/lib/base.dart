@@ -17,3 +17,6 @@ export 'favorit/view/favorit_view.dart';
 
 //PROFILE
 export 'profile/view/profile_view.dart';
+
+//DETAIL
+export 'detail/view/detail_view.dart';
