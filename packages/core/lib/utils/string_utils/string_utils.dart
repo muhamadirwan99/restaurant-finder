@@ -320,7 +320,7 @@ class StringUtils {
     if (data == null) return null;
     if (data.runtimeType == String) return data;
     if (data.runtimeType == bool) return data;
-    if (data.runtimeType == double) return data;
+    // if (data.runtimeType == double) return data;
 
     return data.toString();
   }

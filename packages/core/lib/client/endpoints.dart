@@ -8,7 +8,7 @@ class Endpoints {
   static const String detail = "/detail";
   static const String search = "/search";
   static const String review = "/review";
-  static const String smallImage = "/images/small/";
-  static const String mediumImage = "/images/medium/";
-  static const String largeImage = "/images/large/";
+  static const String smallImage = "images/small/";
+  static const String mediumImage = "images/medium/";
+  static const String largeImage = "images/large/";
 }

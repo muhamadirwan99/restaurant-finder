@@ -1,3 +1,5 @@
+import 'package:core/core.dart';
+
 class ListRestaurantModel {
   bool? error;
   String? message;
@@ -36,7 +38,7 @@ class Restaurants {
   String? description;
   String? pictureId;
   String? city;
-  double? rating;
+  String? rating;
 
   Restaurants({this.id, this.name, this.description, this.pictureId, this.city, this.rating});
 
@@ -46,7 +48,7 @@ class Restaurants {
     description = json['description'];
     pictureId = json['pictureId'];
     city = json['city'];
-    rating = json['rating'];
+    rating = StringUtils.checkModel(json['rating']);
   }
 
   Map<String, dynamic> toJson() {

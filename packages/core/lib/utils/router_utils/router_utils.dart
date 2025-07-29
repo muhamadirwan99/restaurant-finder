@@ -2,6 +2,7 @@ class RouterUtils {
   //BASE ROUTE
   static const String root = '/';
   static const String beranda = '/beranda';
+  static const String mainLayout = '/main';
 
   //Auth Route
   static const String login = '/login';
