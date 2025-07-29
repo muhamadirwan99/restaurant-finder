@@ -17,12 +17,6 @@ class Setup {
 
     newRouter = router;
 
-    // Set preferred orientation
-    // await SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
-
     // Load SVG
     await loadSVG();
 
@@ -40,10 +34,6 @@ class Setup {
         //User Data Model
         Hive.registerAdapter(UserDataModelAdapter());
         Hive.registerAdapter(DataUserAdapter());
-
-        // Versioning Model
-        Hive.registerAdapter(VersioningModelAdapter());
-        Hive.registerAdapter(DataVersioningAdapter());
       }
 
       mainStorage = await Hive.openBox("restaurant_finder");
@@ -56,11 +46,5 @@ class Setup {
       await Hive.deleteBoxFromDisk('restaurant_finder');
     }
     //END Initialize Hive
-
-    if (!kIsWeb) {
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-      VersionDatabase.save(packageInfo.version);
-    }
   }
 }

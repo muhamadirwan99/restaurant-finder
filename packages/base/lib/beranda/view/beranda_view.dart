@@ -142,23 +142,6 @@ class BerandaView extends StatefulWidget {
                   ],
                 ),
                 const SizedBox(height: 16.0),
-                StaggeredGrid.count(
-                  crossAxisCount: getValueForScreenType<int>(
-                    context: context,
-                    mobile: 2,
-                    tablet: 4,
-                  ),
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  children: menuItems.map((data) {
-                    return cardMenu(
-                      context: context,
-                      title: data.text,
-                      icon: data.icon,
-                      onTap: data.onTap,
-                    );
-                  }).toList(),
-                ),
               ],
             ),
           ),
@@ -231,10 +214,8 @@ class BerandaView extends StatefulWidget {
                                 textEditingController: TextEditingController(
                                   text: "Text",
                                 ),
-                                validator:
-                                    Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate:
-                                    AutovalidateMode.onUserInteraction,
+                                validator: Validatorless.max(20, "Max 20 karakter"),
+                                autoValidate: AutovalidateMode.onUserInteraction,
                               ),
                               const SizedBox(height: 16.0),
                               BaseForm(
@@ -243,10 +224,8 @@ class BerandaView extends StatefulWidget {
                                 textEditingController: TextEditingController(
                                   text: "Text",
                                 ),
-                                validator:
-                                    Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate:
-                                    AutovalidateMode.onUserInteraction,
+                                validator: Validatorless.max(20, "Max 20 karakter"),
+                                autoValidate: AutovalidateMode.onUserInteraction,
                               ),
                               const SizedBox(height: 16.0),
                               BaseForm(
@@ -256,10 +235,8 @@ class BerandaView extends StatefulWidget {
                                 textEditingController: TextEditingController(
                                   text: "Text",
                                 ),
-                                validator:
-                                    Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate:
-                                    AutovalidateMode.onUserInteraction,
+                                validator: Validatorless.max(20, "Max 20 karakter"),
+                                autoValidate: AutovalidateMode.onUserInteraction,
                               ),
                               const SizedBox(height: 16.0),
                               BaseForm(
@@ -268,10 +245,8 @@ class BerandaView extends StatefulWidget {
                                 textEditingController: TextEditingController(
                                   text: "Text",
                                 ),
-                                validator:
-                                    Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate:
-                                    AutovalidateMode.onUserInteraction,
+                                validator: Validatorless.max(20, "Max 20 karakter"),
+                                autoValidate: AutovalidateMode.onUserInteraction,
                               ),
                               const SizedBox(height: 16.0),
                             ],

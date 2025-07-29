@@ -2,12 +2,12 @@ name: restaurant_finder
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.4 <4.0.0'
+  sdk: ">=3.3.4 <4.0.0"
 
 dependencies:
   flutter:
@@ -24,12 +24,12 @@ dependencies:
   firebase_crashlytics: ^3.5.5
   firebase_analytics: ^10.10.5
   validatorless: ^1.2.3
-  
+
   core:
     path: packages/core
   base:
     path: packages/base
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,3 +47,4 @@ flutter:
     - assets/icons/state/
     - assets/icons/toogle/
     - assets/images/
+    - assets/files/

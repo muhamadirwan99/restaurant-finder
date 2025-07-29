@@ -15,7 +15,6 @@ dependencies:
   logger: ^1.4.0
   camera: ^0.11.0+2
   intl: ^0.18.1
-  pluto_grid_plus: ^8.4.0
   dropdown_search: ^5.0.6
   flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.0.10+1
@@ -27,26 +26,13 @@ dependencies:
   hive_flutter: ^1.1.0
   go_router: ^14.2.7
   validatorless: ^1.2.3
-  dart_ping: ^9.0.1
-  smooth_scroll_multiplatform: ^1.0.8
-  vph_web_date_picker: ^0.0.6
-  dart_pusher_channels: ^1.2.2+1
   permission_handler: ^11.3.1
-  device_info_plus: ^10.1.2
   dropdown_button2: ^2.3.9
-  package_info_plus: ^8.0.2
-  responsive_builder: ^0.7.0
-  flutter_switch: ^0.3.2
   pull_to_refresh_new: ^2.0.5
-  ota_update: ^6.0.0
-  fleather: ^1.14.5+1
   url_launcher: ^6.3.1
-  flutter_pdfview: ^1.3.2
   image_picker: ^1.1.2
-  flutter_image_compress: ^2.3.0
-  calendar_date_picker2: ^1.1.8
   geolocator: ^12.0.0
-  geocoding: ^4.0.0
+  # geocoding: ^4.0.0
 
 publish_to: none
 

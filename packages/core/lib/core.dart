@@ -2,7 +2,6 @@ library core;
 
 //package
 export 'package:camera/camera.dart';
-export 'package:dart_pusher_channels/dart_pusher_channels.dart';
 export 'package:dio/dio.dart';
 export 'package:dropdown_search/dropdown_search.dart';
 export 'package:equatable/equatable.dart';
@@ -13,23 +12,11 @@ export 'package:go_router/go_router.dart';
 export 'package:hive/hive.dart';
 export 'package:hive_flutter/hive_flutter.dart';
 export 'package:lottie/lottie.dart';
-export 'package:pluto_grid_plus/pluto_grid_plus.dart';
-export 'package:smooth_scroll_multiplatform/smooth_scroll_multiplatform.dart';
 export 'package:validatorless/validatorless.dart';
-export 'package:vph_web_date_picker/vph_web_date_picker.dart';
 export 'package:permission_handler/permission_handler.dart';
-export 'package:device_info_plus/device_info_plus.dart';
 export 'package:dropdown_button2/dropdown_button2.dart';
-export 'package:package_info_plus/package_info_plus.dart';
-export 'package:responsive_builder/responsive_builder.dart';
-export 'package:dart_ping/dart_ping.dart';
-export 'package:flutter_switch/flutter_switch.dart';
 export 'package:pull_to_refresh_new/pull_to_refresh.dart';
-export 'package:fleather/fleather.dart';
-export 'package:ota_update/ota_update.dart';
 export 'package:url_launcher/url_launcher.dart';
-export 'package:flutter_pdfview/flutter_pdfview.dart';
-export 'package:calendar_date_picker2/calendar_date_picker2.dart';
 export 'package:image_picker/image_picker.dart';
 
 //Model
@@ -37,7 +24,6 @@ export 'models/global_model.dart';
 export 'models/user_data_model.dart';
 export 'models/theme_adapter.dart';
 export 'models/image_model.dart';
-export 'models/versioning_model.dart';
 
 //dummy
 export 'dummy/dummy.dart';
@@ -86,7 +72,6 @@ export 'utils/router_utils/router_utils.dart';
 export 'utils/get_image_from_asset/get_image_from_asset.dart';
 export 'utils/logout/logout.dart';
 export 'utils/json_utils/json_utils.dart';
-export 'utils/base64/base64_converter.dart';
 
 export 'media_res/media_res.dart';
 
@@ -115,7 +100,6 @@ export 'widgets/base_dialog/content_dialog_selesai.dart';
 export 'widgets/base_dialog/content_dialog_konfirmasi.dart';
 export 'widgets/base_dialog/show_base_dialog_loading.dart';
 export 'widgets/base_form/base_form.dart';
-export 'widgets/base_form/base_form_util.dart';
 export 'widgets/base_form/disable_form.dart';
 export 'widgets/base_center/base_center.dart';
 export 'widgets/base_form/base_prefix_rupiah.dart';
