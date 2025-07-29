@@ -273,6 +273,9 @@ class DetailView extends StatefulWidget {
   }
 
   Widget _buildDescription(BuildContext context, Restaurant restaurant) {
+    final description = restaurant.description ?? 'No description available';
+    const int maxLines = 3;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -285,16 +288,107 @@ class DetailView extends StatefulWidget {
                 ),
           ),
           const SizedBox(height: 8),
-          Text(
-            restaurant.description ?? 'No description available',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  height: 1.6,
-                ),
-            textAlign: TextAlign.justify,
+          StatefulBuilder(
+            builder: (context, setState) {
+              // Get controller instance
+              final controller = context.findAncestorStateOfType<DetailController>();
+              final isExpanded = controller?.isDescriptionExpanded ?? false;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    textAlign: TextAlign.justify,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            height: 1.6,
+                          ),
+                      children: [
+                        TextSpan(
+                          text: isExpanded
+                              ? description
+                              : _getTruncatedText(context, description, maxLines),
+                        ),
+                        if (!isExpanded && _shouldShowSeeMore(context, description, maxLines))
+                          TextSpan(
+                            text: '... ',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  height: 1.6,
+                                ),
+                          ),
+                        if (_shouldShowSeeMore(context, description, maxLines))
+                          WidgetSpan(
+                            child: GestureDetector(
+                              onTap: () {
+                                controller?.toggleDescriptionExpansion();
+                                setState(() {});
+                              },
+                              child: Text(
+                                isExpanded ? ' See Less' : 'See More',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.6,
+                                    ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
     );
+  }
+
+  String _getTruncatedText(BuildContext context, String text, int maxLines) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6),
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: maxLines,
+    );
+
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 32);
+
+    if (textPainter.didExceedMaxLines) {
+      final endIndex = textPainter
+          .getPositionForOffset(
+            Offset(textPainter.size.width, textPainter.size.height),
+          )
+          .offset;
+
+      // Find the last complete word before the cutoff
+      String truncated = text.substring(0, endIndex);
+      int lastSpace = truncated.lastIndexOf(' ');
+      if (lastSpace > 0) {
+        truncated = truncated.substring(0, lastSpace);
+      }
+
+      return truncated;
+    }
+
+    return text;
+  }
+
+  bool _shouldShowSeeMore(BuildContext context, String text, int maxLines) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6),
+      ),
+      textDirection: TextDirection.ltr,
+      maxLines: maxLines,
+    );
+
+    textPainter.layout(maxWidth: MediaQuery.of(context).size.width - 32);
+    return textPainter.didExceedMaxLines;
   }
 
   Widget _buildCategories(BuildContext context, Restaurant restaurant) {

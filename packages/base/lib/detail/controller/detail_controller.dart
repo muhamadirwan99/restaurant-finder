@@ -12,6 +12,7 @@ class DetailController extends State<DetailView> {
   DetailRestaurantModel? detailData;
   bool isLoading = true;
   String? errorMessage;
+  bool isDescriptionExpanded = false;
 
   @override
   void initState() {
@@ -40,6 +41,12 @@ class DetailController extends State<DetailView> {
       });
       await showInfoDialog(e.toString());
     }
+  }
+
+  void toggleDescriptionExpansion() {
+    setState(() {
+      isDescriptionExpanded = !isDescriptionExpanded;
+    });
   }
 
   @override
