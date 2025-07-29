@@ -38,7 +38,6 @@ export 'enum/dialog_type.dart';
 export 'utils/enum/enum_update.dart';
 
 //Service
-export 'service/api_service_core.dart';
 export 'service/logger_service.dart';
 
 //Database

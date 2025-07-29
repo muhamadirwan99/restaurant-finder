@@ -1,174 +1,8 @@
 import 'package:base/beranda/controller/beranda_controller.dart';
-import 'package:base/beranda/utils/menu_beranda_model.dart';
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 class BerandaView extends StatefulWidget {
   const BerandaView({super.key});
-
-  Widget buildWelcomeHeader({
-    required BuildContext context,
-    required String? name,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        border: Border(
-          bottom: BorderSide(
-            color: Theme.of(context).colorScheme.outline,
-            width: 1,
-          ),
-        ),
-      ),
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Selamat Datang! 👋",
-                style: Get.theme.textTheme.bodyMedium?.copyWith(
-                  color: Get.theme.colorScheme.onSecondary,
-                  height: 1.5,
-                ),
-              ),
-              Text(
-                "Versi ${VersionDatabase.version} (${VersionDatabase.versionShoreBird})",
-                style: Get.theme.textTheme.bodyMedium,
-              ),
-            ],
-          ),
-          Text(
-            StringUtils.trimStringStrip(name),
-            style: Get.theme.textTheme.titleLarge?.copyWith(
-              height: 1.5,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget cardMenu({
-    required BuildContext context,
-    required String title,
-    required String icon,
-    required Function()? onTap,
-  }) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        border: Border.all(
-          color: Theme.of(context).colorScheme.outline,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: Image.asset(
-                    icon,
-                    height: 40,
-                    width: 40,
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                SizedBox(
-                  height: 32,
-                  child: Text(
-                    title,
-                    style: Get.theme.textTheme.labelLarge,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget containerMenu({
-    required BuildContext context,
-    required List<MenuBerandaModel> menuItems,
-    required String title,
-    required String icon,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: Border.all(
-                color: Theme.of(context).colorScheme.outline,
-                width: 1,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      icon,
-                      height: 24,
-                      width: 24,
-                    ),
-                    const SizedBox(width: 12.0),
-                    Text(
-                      title,
-                      style: Get.theme.textTheme.titleLarge,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildMenuSection({
-    required BuildContext context,
-    required List<String?> roles,
-    required List<MenuBerandaModel> menuItems,
-    required String title,
-    required String icon,
-  }) {
-    return Column(
-      children: [
-        const SizedBox(height: 14.0),
-        containerMenu(
-          context: context,
-          menuItems: menuItems,
-          title: title,
-          icon: icon,
-        ),
-      ],
-    );
-  }
 
   Widget build(BuildContext context, BerandaController controller) {
     return Scaffold(
@@ -176,492 +10,116 @@ class BerandaView extends StatefulWidget {
         title: const Text(
           "Beranda",
         ),
-        actions: const [
-          SwitchThemeWidget(),
-          SizedBox(width: 16.0),
-        ],
+        // actions: const [
+        //   SwitchThemeWidget(),
+        //   SizedBox(width: 16.0),
+        // ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildWelcomeHeader(
-            context: context,
-            name: controller.roleData?.name,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const BaseForm(),
-                              const SizedBox(height: 16.0),
-                              const BaseForm(
-                                label: "Label",
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseForm(
-                                label: "Label",
-                                textEditingController: TextEditingController(
-                                  text: "Text",
-                                ),
-                                validator: Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate: AutovalidateMode.onUserInteraction,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseForm(
-                                prefixIcon: const Icon(Icons.search),
-                                label: "Label",
-                                textEditingController: TextEditingController(
-                                  text: "Text",
-                                ),
-                                validator: Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate: AutovalidateMode.onUserInteraction,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseForm(
-                                prefixIcon: const Icon(Icons.key),
-                                suffixIcon: const Icon(Icons.visibility),
-                                label: "Label",
-                                textEditingController: TextEditingController(
-                                  text: "Text",
-                                ),
-                                validator: Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate: AutovalidateMode.onUserInteraction,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseForm(
-                                suffixIcon: const Icon(Icons.visibility),
-                                label: "Label",
-                                textEditingController: TextEditingController(
-                                  text: "Text",
-                                ),
-                                validator: Validatorless.max(20, "Max 20 karakter"),
-                                autoValidate: AutovalidateMode.onUserInteraction,
-                              ),
-                              const SizedBox(height: 16.0),
-                            ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Builder(
+              builder: (context) {
+                return SizedBox(
+                  height: 150.0,
+                  child: ListView.builder(
+                    itemCount: controller.items.length,
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    itemBuilder: (context, index) {
+                      var item = controller.items[index];
+                      return Container(
+                        height: 150.0,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        margin: const EdgeInsets.only(right: 16.0),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              16.0,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: Column(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              16.0,
+                            ),
+                          ),
+                          child: Stack(
                             children: [
-                              // buildMenuSection(
-                              //   context: context,
-                              //   roles: [
-                              //     controller.roleData?.roleMenuInfoPajak,
-                              //     controller.roleData?.roleMenuAwalAkhirLayanan,
-                              //     controller.roleData?.roleMenuLaporanHarian,
-                              //   ],
-                              //   menuItems: controller.menuBeranda.generateMenuLayanan(),
-                              //   title: "Menu Layanan",
-                              //   icon: MediaRes.icons.layanan.workAlert,
-                              // ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: BasePrimaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Primary Button",
-                                      onPressed: () {},
+                              Image.network(
+                                item["photo"],
+                                height: 150.0,
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                fit: BoxFit.cover,
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Container(
+                                    height: 150.0,
+                                    width: MediaQuery.of(context).size.width * 0.7,
+                                    color: Colors.grey[200],
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress.expectedTotalBytes != null
+                                            ? loadingProgress.cumulativeBytesLoaded /
+                                                loadingProgress.expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    height: 150.0,
+                                    width: MediaQuery.of(context).size.width * 0.7,
+                                    color: Colors.grey[300],
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.error,
+                                        color: Colors.grey,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              Positioned(
+                                bottom: 8,
+                                left: 8,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    item["title"],
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BasePrimaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Primary Button",
-                                      suffixIcon: const Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BasePrimaryButton(
-                                      suffixIcon: const Icon(Icons.add),
-                                      text: "Primary Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  BasePrimaryButton(
-                                    isDense: true,
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Primary Button",
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BasePrimaryButton(
-                                    isDense: true,
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Primary Button",
-                                    suffixIcon: const Icon(Icons.add),
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BasePrimaryButton(
-                                    isDense: true,
-                                    suffixIcon: const Icon(Icons.add),
-                                    text: "Primary Button",
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-
-                              const BasePrimaryButton(
-                                text: "Primary Button",
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-
-                              BasePrimaryButton(
-                                text: "Primary Button",
-                                isDense: true,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BasePrimaryButton(
-                                text: "Primary Button",
-                                isDense: true,
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: BaseSecondaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Secondary Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseSecondaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Secondary Button",
-                                      suffixIcon: const Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseSecondaryButton(
-                                      suffixIcon: const Icon(Icons.add),
-                                      text: "Secondary Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  BaseSecondaryButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Secondary Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseSecondaryButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Secondary Button",
-                                    suffixIcon: const Icon(Icons.add),
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseSecondaryButton(
-                                    suffixIcon: const Icon(Icons.add),
-                                    text: "Secondary Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-
-                              BaseSecondaryButton(
-                                text: "Secondary Button",
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseSecondaryButton(
-                                text: "Secondary Button",
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseSecondaryButton(
-                                text: "Secondary Button",
-                                isDense: true,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseSecondaryButton(
-                                text: "Secondary Button",
-                                isDense: true,
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: BaseTertiaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Tertiary Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseTertiaryButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Tertiary Button",
-                                      suffixIcon: const Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseTertiaryButton(
-                                      suffixIcon: const Icon(Icons.add),
-                                      text: "Tertiary Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  BaseTertiaryButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Tertiary Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseTertiaryButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Tertiary Button",
-                                    isDense: true,
-                                    suffixIcon: const Icon(Icons.add),
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseTertiaryButton(
-                                    suffixIcon: const Icon(Icons.add),
-                                    text: "Tertiary Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-
-                              const SizedBox(height: 16.0),
-                              BaseTertiaryButton(
-                                text: "Tertiary Button",
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseTertiaryButton(
-                                text: "Tertiary Button",
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseTertiaryButton(
-                                text: "Tertiary Button",
-                                isDense: true,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseTertiaryButton(
-                                text: "Tertiary Button",
-                                isDense: true,
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: BaseDangerButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Danger Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseDangerButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "Danger Button",
-                                      suffixIcon: const Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseDangerButton(
-                                      suffixIcon: const Icon(Icons.add),
-                                      text: "Danger Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  BaseDangerButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Danger Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseDangerButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "Danger Button",
-                                    suffixIcon: const Icon(Icons.add),
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseDangerButton(
-                                    suffixIcon: const Icon(Icons.add),
-                                    text: "Danger Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-
-                              BaseDangerButton(
-                                text: "Danger Button",
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseDangerButton(
-                                text: "Danger Button",
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseDangerButton(
-                                text: "Danger Button",
-                                isDense: true,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseDangerButton(
-                                text: "Danger Button",
-                                isDense: true,
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: BaseSecondaryDangerButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "SecondaryDanger Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseSecondaryDangerButton(
-                                      prefixIcon: const Icon(Icons.add),
-                                      text: "SecondaryDanger Button",
-                                      suffixIcon: const Icon(Icons.add),
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  Expanded(
-                                    child: BaseSecondaryDangerButton(
-                                      suffixIcon: const Icon(Icons.add),
-                                      text: "SecondaryDanger Button",
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              Row(
-                                children: [
-                                  BaseSecondaryDangerButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "SecondaryDanger Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseSecondaryDangerButton(
-                                    prefixIcon: const Icon(Icons.add),
-                                    text: "SecondaryDanger Button",
-                                    suffixIcon: const Icon(Icons.add),
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  BaseSecondaryDangerButton(
-                                    suffixIcon: const Icon(Icons.add),
-                                    text: "SecondaryDanger Button",
-                                    isDense: true,
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseSecondaryDangerButton(
-                                text: "SecondaryDanger Button",
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseSecondaryDangerButton(
-                                text: "SecondaryDanger Button",
-                                onPressed: null,
-                              ),
-                              const SizedBox(height: 16.0),
-                              BaseSecondaryDangerButton(
-                                text: "SecondaryDanger Button",
-                                isDense: true,
-                                onPressed: () {},
-                              ),
-                              const SizedBox(height: 16.0),
-                              const BaseSecondaryDangerButton(
-                                text: "Danger Button",
-                                isDense: true,
-                                onPressed: null,
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                ],
-              ),
+                );
+              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
