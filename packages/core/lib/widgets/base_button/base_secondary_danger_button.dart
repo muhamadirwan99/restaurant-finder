@@ -18,8 +18,7 @@ class BaseSecondaryDangerButton extends StatefulWidget {
   });
 
   @override
-  State<BaseSecondaryDangerButton> createState() =>
-      _BaseSecondaryDangerButtonState();
+  State<BaseSecondaryDangerButton> createState() => _BaseSecondaryDangerButtonState();
 }
 
 class _BaseSecondaryDangerButtonState extends State<BaseSecondaryDangerButton> {
@@ -55,8 +54,7 @@ class _BaseSecondaryDangerButtonState extends State<BaseSecondaryDangerButton> {
                   : Theme.of(context).disabledColor,
             ),
           ),
-          overlayColor: MaterialStateProperty.all<Color>(
-              onHover ? Theme.of(context).hoverColor : Colors.transparent),
+          overlayColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColorDark),
         ),
         onFocusChange: (value) {
           setState(
@@ -89,8 +87,7 @@ class _BaseSecondaryDangerButtonState extends State<BaseSecondaryDangerButton> {
                         child: widget.prefixIcon!,
                       )
                     : Container(),
-                widget.prefixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.prefixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )
@@ -108,8 +105,7 @@ class _BaseSecondaryDangerButtonState extends State<BaseSecondaryDangerButton> {
                         ),
                       )
                     : Container(),
-                widget.suffixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.suffixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )

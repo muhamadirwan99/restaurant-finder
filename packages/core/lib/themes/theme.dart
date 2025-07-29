@@ -7,6 +7,8 @@ ThemeData themeDataLight = ThemeData(
   // Primary Colors
   primaryColor: primaryColor,
 
+  primaryColorDark: gray600.withOpacity(0.1),
+
   // Background Colors
   scaffoldBackgroundColor: backgroundLight,
   canvasColor: surfaceLight,
@@ -16,7 +18,7 @@ ThemeData themeDataLight = ThemeData(
   // bottomAppBarColor: deprecated, now uses colorScheme.surface
 
   // Accent & Secondary Colors
-  hoverColor: neutralMist,
+  hoverColor: gray600.withOpacity(0.1),
   focusColor: primaryColor.withOpacity(0.12),
   highlightColor: primaryColor.withOpacity(0.12),
   splashColor: primaryColor.withOpacity(0.24),
@@ -277,6 +279,8 @@ ThemeData themeDataDark = ThemeData.dark(
   // Primary Colors
   primaryColor: primaryColor,
 
+  primaryColorDark: gray600.withOpacity(0.1),
+
   // Background Colors
   scaffoldBackgroundColor: backgroundDark,
   canvasColor: surfaceDark,
@@ -286,7 +290,7 @@ ThemeData themeDataDark = ThemeData.dark(
   // bottomAppBarColor: deprecated, now uses colorScheme.surface
 
   // Accent & Secondary Colors
-  hoverColor: neutralGraphite,
+  hoverColor: gray600.withOpacity(0.1),
   focusColor: primaryColor.withOpacity(0.24),
   highlightColor: primaryColor.withOpacity(0.24),
   splashColor: primaryColor.withOpacity(0.32),

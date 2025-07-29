@@ -16,11 +16,19 @@ class SplashScreenController extends State<SplashScreenView> {
 
   Future<void> _checkAuthStatus() async {
     // Simulasi loading awal
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 4));
 
     String route = "";
 
-    route = RouterUtils.login;
+    final user = FirebaseAuth.instance.currentUser;
+
+    // Jika user sudah login, arahkan ke beranda
+    if (user != null) {
+      route = RouterUtils.beranda;
+    } else {
+      // Jika belum login, arahkan ke halaman login
+      route = RouterUtils.login;
+    }
 
     // Navigasi berdasarkan status login
     if (mounted) {

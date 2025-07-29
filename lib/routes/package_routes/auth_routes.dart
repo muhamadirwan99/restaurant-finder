@@ -9,10 +9,4 @@ final List<GoRoute> authRoutes = [
       return const LoginView();
     },
   ),
-  GoRoute(
-    path: RouterUtils.register,
-    builder: (BuildContext context, GoRouterState state) {
-      return const RegisterView();
-    },
-  ),
 ];

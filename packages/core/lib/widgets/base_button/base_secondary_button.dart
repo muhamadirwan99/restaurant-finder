@@ -54,8 +54,7 @@ class _BaseSecondaryButtonState extends State<BaseSecondaryButton> {
                   : Theme.of(context).disabledColor,
             ),
           ),
-          overlayColor: MaterialStateProperty.all<Color>(
-              onHover ? Theme.of(context).hoverColor : Colors.transparent),
+          overlayColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColorDark),
         ),
         onFocusChange: (value) {
           setState(
@@ -88,8 +87,7 @@ class _BaseSecondaryButtonState extends State<BaseSecondaryButton> {
                         child: widget.prefixIcon!,
                       )
                     : Container(),
-                widget.prefixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.prefixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )
@@ -107,8 +105,7 @@ class _BaseSecondaryButtonState extends State<BaseSecondaryButton> {
                         ),
                       )
                     : Container(),
-                widget.suffixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.suffixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )

@@ -42,7 +42,7 @@ class LoginView extends StatefulWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(
-          height: 24.0,
+          height: 50.0,
         ),
         BaseForm(
           label: "Email Address",
@@ -158,7 +158,7 @@ class LoginView extends StatefulWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         const SizedBox(
-          height: 24.0,
+          height: 50.0,
         ),
         BaseForm(
           label: "Full Name",

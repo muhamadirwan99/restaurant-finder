@@ -49,13 +49,10 @@ class _BaseTertiaryButtonState extends State<BaseTertiaryButton> {
               onHover ? Theme.of(context).hoverColor : Colors.transparent),
           side: MaterialStateProperty.all<BorderSide>(
             BorderSide(
-              color: widget.onPressed != null
-                  ? Colors.transparent
-                  : Colors.transparent,
+              color: widget.onPressed != null ? Colors.transparent : Colors.transparent,
             ),
           ),
-          overlayColor: MaterialStateProperty.all<Color>(
-              onHover ? Theme.of(context).hoverColor : Colors.transparent),
+          overlayColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColorDark),
         ),
         onFocusChange: (value) {
           setState(
@@ -88,8 +85,7 @@ class _BaseTertiaryButtonState extends State<BaseTertiaryButton> {
                         child: widget.prefixIcon!,
                       )
                     : Container(),
-                widget.prefixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.prefixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )
@@ -107,8 +103,7 @@ class _BaseTertiaryButtonState extends State<BaseTertiaryButton> {
                         ),
                       )
                     : Container(),
-                widget.suffixIcon != null &&
-                        StringUtils.trimString(widget.text).isNotEmpty
+                widget.suffixIcon != null && StringUtils.trimString(widget.text).isNotEmpty
                     ? const SizedBox(
                         width: 8.0,
                       )
