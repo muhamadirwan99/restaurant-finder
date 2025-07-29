@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 ThemeData themeDataLight = ThemeData().copyWith(
   // Primary Colors
-  primaryColor: primaryEmerald,
+  primaryColor: primaryColor,
 
   // Background Colors
   scaffoldBackgroundColor: backgroundLight,
@@ -15,9 +15,9 @@ ThemeData themeDataLight = ThemeData().copyWith(
 
   // Accent & Secondary Colors
   hoverColor: neutralMist,
-  focusColor: primaryTeal.withOpacity(0.12),
-  highlightColor: primaryEmerald.withOpacity(0.12),
-  splashColor: primaryEmerald.withOpacity(0.24),
+  focusColor: primaryColor.withOpacity(0.12),
+  highlightColor: primaryColor.withOpacity(0.12),
+  splashColor: primaryColor.withOpacity(0.24),
 
   // Selection Colors
   unselectedWidgetColor: neutralStone,
@@ -29,23 +29,23 @@ ThemeData themeDataLight = ThemeData().copyWith(
   dividerColor: neutralMist,
 
   // Indicator Colors
-  indicatorColor: primaryEmerald,
+  indicatorColor: primaryColor,
 
   // Shadow Color
   shadowColor: neutralOnyx.withOpacity(0.16),
 
-  colorScheme: const ColorScheme.light(
+  colorScheme: ColorScheme.light(
     brightness: Brightness.light,
     background: backgroundLight,
     onBackground: neutralOnyx,
     surface: surfaceLight,
     onSurface: neutralOnyx,
     outline: neutralMist,
-    primary: primaryEmerald,
+    primary: primaryColor,
     onPrimary: neutralPure,
     secondary: neutralSilver,
     onSecondary: neutralCharcoal,
-    tertiary: primaryTeal,
+    tertiary: primaryColor,
     onTertiary: neutralPure,
     error: errorFresh,
     onError: neutralPure,
@@ -60,7 +60,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
   ),
 
   appBarTheme: AppBarTheme(
-    backgroundColor: primaryEmerald,
+    backgroundColor: primaryColor,
     foregroundColor: neutralPure,
     elevation: 0,
     shadowColor: neutralOnyx.withOpacity(0.1),
@@ -89,7 +89,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
   // Button Themes
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: primaryEmerald,
+      backgroundColor: primaryColor,
       foregroundColor: neutralPure,
       shadowColor: neutralOnyx.withOpacity(0.3),
       elevation: 2,
@@ -98,14 +98,14 @@ ThemeData themeDataLight = ThemeData().copyWith(
 
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: primaryEmerald,
-      side: const BorderSide(color: primaryEmerald),
+      foregroundColor: primaryColor,
+      side: BorderSide(color: primaryColor),
     ),
   ),
 
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: primaryEmerald,
+      foregroundColor: primaryColor,
     ),
   ),
 
@@ -123,7 +123,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: primaryEmerald, width: 2),
+      borderSide: BorderSide(color: primaryColor, width: 2),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
@@ -137,7 +137,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
   checkboxTheme: CheckboxThemeData(
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return surfaceLight;
     }),
@@ -148,7 +148,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
   radioTheme: RadioThemeData(
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return neutralStone;
     }),
@@ -158,29 +158,29 @@ ThemeData themeDataLight = ThemeData().copyWith(
   switchTheme: SwitchThemeData(
     thumbColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return neutralStone;
     }),
     trackColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald.withOpacity(0.5);
+        return primaryColor.withOpacity(0.5);
       }
       return neutralMist;
     }),
   ),
 
   // Progress Indicator Theme
-  progressIndicatorTheme: const ProgressIndicatorThemeData(
-    color: primaryEmerald,
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: primaryColor,
     linearTrackColor: neutralMist,
     circularTrackColor: neutralMist,
   ),
 
   // Bottom Navigation Bar Theme
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: surfaceLight,
-    selectedItemColor: primaryEmerald,
+    selectedItemColor: primaryColor,
     unselectedItemColor: neutralStone,
     type: BottomNavigationBarType.fixed,
     elevation: 8,
@@ -194,10 +194,10 @@ ThemeData themeDataLight = ThemeData().copyWith(
   ),
 
   // Tab Bar Theme
-  tabBarTheme: const TabBarTheme(
-    labelColor: primaryEmerald,
+  tabBarTheme: TabBarTheme(
+    labelColor: primaryColor,
     unselectedLabelColor: neutralStone,
-    indicatorColor: primaryEmerald,
+    indicatorColor: primaryColor,
   ),
 
   // Drawer Theme
@@ -208,8 +208,8 @@ ThemeData themeDataLight = ThemeData().copyWith(
   ),
 
   // Floating Action Button Theme
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: primaryEmerald,
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: primaryColor,
     foregroundColor: neutralPure,
     elevation: 6,
   ),
@@ -218,7 +218,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
   snackBarTheme: SnackBarThemeData(
     backgroundColor: neutralOnyx,
     contentTextStyle: const TextStyle(color: neutralPure),
-    actionTextColor: primaryEmerald,
+    actionTextColor: primaryColor,
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
@@ -258,9 +258,9 @@ ThemeData themeDataLight = ThemeData().copyWith(
   ),
 
   // List Tile Theme
-  listTileTheme: const ListTileThemeData(
+  listTileTheme: ListTileThemeData(
     tileColor: Colors.transparent,
-    selectedTileColor: primaryEmerald,
+    selectedTileColor: primaryColor,
     selectedColor: neutralPure,
     textColor: neutralOnyx,
     iconColor: neutralSlate,
@@ -271,7 +271,7 @@ ThemeData themeDataLight = ThemeData().copyWith(
 
 ThemeData themeDataDark = ThemeData.dark().copyWith(
   // Primary Colors
-  primaryColor: primaryEmerald,
+  primaryColor: primaryColor,
 
   // Background Colors
   scaffoldBackgroundColor: backgroundDark,
@@ -283,9 +283,9 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
 
   // Accent & Secondary Colors
   hoverColor: neutralGraphite,
-  focusColor: primaryTeal.withOpacity(0.24),
-  highlightColor: primaryEmerald.withOpacity(0.24),
-  splashColor: primaryEmerald.withOpacity(0.32),
+  focusColor: primaryColor.withOpacity(0.24),
+  highlightColor: primaryColor.withOpacity(0.24),
+  splashColor: primaryColor.withOpacity(0.32),
 
   // Selection Colors
   unselectedWidgetColor: neutralSlate,
@@ -297,38 +297,38 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   dividerColor: neutralCharcoal,
 
   // Indicator Colors
-  indicatorColor: primaryEmerald,
+  indicatorColor: primaryColor,
 
   // Shadow Color
   shadowColor: neutralEbony.withOpacity(0.4),
 
-  colorScheme: const ColorScheme.dark(
+  colorScheme: ColorScheme.dark(
     brightness: Brightness.dark,
     background: backgroundDark,
     onBackground: neutralPure,
     surface: surfaceDark,
     onSurface: neutralPure,
     outline: neutralCharcoal,
-    primary: primaryEmerald,
+    primary: primaryColor,
     onPrimary: neutralPure,
     secondary: neutralOnyx,
     onSecondary: neutralLight,
-    tertiary: primaryTeal,
+    tertiary: primaryColor,
     onTertiary: neutralPure,
     error: errorFresh,
     onError: neutralPure,
     primaryContainer: neutralOnyx,
-    onPrimaryContainer: primaryEmerald,
+    onPrimaryContainer: primaryColor,
     secondaryContainer: neutralOnyx,
     onSecondaryContainer: primaryAmber,
     tertiaryContainer: neutralOnyx,
-    onTertiaryContainer: primaryTeal,
+    onTertiaryContainer: primaryColor,
     errorContainer: neutralOnyx,
     onErrorContainer: errorFresh,
   ),
 
   appBarTheme: AppBarTheme(
-    backgroundColor: primaryEmerald,
+    backgroundColor: primaryColor,
     foregroundColor: neutralPure,
     elevation: 0,
     shadowColor: neutralEbony.withOpacity(0.2),
@@ -357,7 +357,7 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   // Button Themes
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: primaryEmerald,
+      backgroundColor: primaryColor,
       foregroundColor: neutralPure,
       shadowColor: neutralEbony.withOpacity(0.5),
       elevation: 3,
@@ -366,14 +366,14 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
 
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      foregroundColor: primaryEmerald,
-      side: const BorderSide(color: primaryEmerald),
+      foregroundColor: primaryColor,
+      side: BorderSide(color: primaryColor),
     ),
   ),
 
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: primaryEmerald,
+      foregroundColor: primaryColor,
     ),
   ),
 
@@ -391,7 +391,7 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
-      borderSide: const BorderSide(color: primaryEmerald, width: 2),
+      borderSide: BorderSide(color: primaryColor, width: 2),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
@@ -405,7 +405,7 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   checkboxTheme: CheckboxThemeData(
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return surfaceDark;
     }),
@@ -417,7 +417,7 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   radioTheme: RadioThemeData(
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return neutralSlate;
     }),
@@ -427,29 +427,29 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   switchTheme: SwitchThemeData(
     thumbColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald;
+        return primaryColor;
       }
       return neutralSlate;
     }),
     trackColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return primaryEmerald.withOpacity(0.5);
+        return primaryColor.withOpacity(0.5);
       }
       return neutralCharcoal;
     }),
   ),
 
   // Progress Indicator Theme
-  progressIndicatorTheme: const ProgressIndicatorThemeData(
-    color: primaryEmerald,
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: primaryColor,
     linearTrackColor: neutralCharcoal,
     circularTrackColor: neutralCharcoal,
   ),
 
   // Bottom Navigation Bar Theme
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: surfaceDark,
-    selectedItemColor: primaryEmerald,
+    selectedItemColor: primaryColor,
     unselectedItemColor: neutralSlate,
     type: BottomNavigationBarType.fixed,
     elevation: 8,
@@ -463,10 +463,10 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   ),
 
   // Tab Bar Theme
-  tabBarTheme: const TabBarTheme(
-    labelColor: primaryEmerald,
+  tabBarTheme: TabBarTheme(
+    labelColor: primaryColor,
     unselectedLabelColor: neutralSlate,
-    indicatorColor: primaryEmerald,
+    indicatorColor: primaryColor,
   ),
 
   // Drawer Theme
@@ -477,8 +477,8 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   ),
 
   // Floating Action Button Theme
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: primaryEmerald,
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: primaryColor,
     foregroundColor: neutralPure,
     elevation: 6,
   ),
@@ -487,7 +487,7 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   snackBarTheme: SnackBarThemeData(
     backgroundColor: neutralGraphite,
     contentTextStyle: const TextStyle(color: neutralPure),
-    actionTextColor: primaryEmerald,
+    actionTextColor: primaryColor,
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
   ),
@@ -527,9 +527,9 @@ ThemeData themeDataDark = ThemeData.dark().copyWith(
   ),
 
   // List Tile Theme
-  listTileTheme: const ListTileThemeData(
+  listTileTheme: ListTileThemeData(
     tileColor: Colors.transparent,
-    selectedTileColor: primaryEmerald,
+    selectedTileColor: primaryColor,
     selectedColor: neutralPure,
     textColor: neutralPure,
     iconColor: neutralSilver,

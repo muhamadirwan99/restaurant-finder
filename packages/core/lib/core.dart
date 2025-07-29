@@ -18,6 +18,7 @@ export 'package:dropdown_button2/dropdown_button2.dart';
 export 'package:pull_to_refresh_new/pull_to_refresh.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:image_picker/image_picker.dart';
+export 'package:google_fonts/google_fonts.dart';
 
 //Model
 export 'models/global_model.dart';

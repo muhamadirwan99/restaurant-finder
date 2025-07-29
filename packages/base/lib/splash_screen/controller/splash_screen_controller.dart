@@ -20,7 +20,7 @@ class SplashScreenController extends State<SplashScreenView> {
 
     String route = "";
 
-    route = RouterUtils.beranda;
+    route = RouterUtils.login;
 
     // Navigasi berdasarkan status login
     if (mounted) {

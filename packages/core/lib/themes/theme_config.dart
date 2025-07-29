@@ -1,184 +1,155 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
-const TextTheme myTextThemeLight = TextTheme(
-  displayLarge: TextStyle(
-    fontFamily: 'Roboto',
+TextTheme myTextThemeLight = TextTheme(
+  displayLarge: GoogleFonts.manrope(
     fontSize: 26,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  displayMedium: TextStyle(
-    fontFamily: 'Roboto',
+  displayMedium: GoogleFonts.manrope(
     fontSize: 24,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  displaySmall: TextStyle(
-    fontFamily: 'Roboto',
+  displaySmall: GoogleFonts.manrope(
     fontSize: 22,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  headlineLarge: TextStyle(
-    fontFamily: 'Roboto',
+  headlineLarge: GoogleFonts.manrope(
     fontSize: 20,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  headlineMedium: TextStyle(
-    fontFamily: 'Roboto',
+  headlineMedium: GoogleFonts.manrope(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  headlineSmall: TextStyle(
-    fontFamily: 'Roboto',
+  headlineSmall: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  titleLarge: TextStyle(
-    fontFamily: 'Roboto',
+  titleLarge: GoogleFonts.manrope(
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: neutralOnyx,
   ),
-  titleMedium: TextStyle(
-    fontFamily: 'Roboto',
+  titleMedium: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: neutralOnyx,
   ),
-  titleSmall: TextStyle(
-    fontFamily: 'Roboto',
+  titleSmall: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w700,
     color: neutralOnyx,
   ),
-  bodyLarge: TextStyle(
-    fontFamily: 'Roboto',
+  bodyLarge: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: neutralOnyx,
   ),
-  bodyMedium: TextStyle(
-    fontFamily: 'Roboto',
+  bodyMedium: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: neutralOnyx,
   ),
-  bodySmall: TextStyle(
-    fontFamily: 'Roboto',
+  bodySmall: GoogleFonts.manrope(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: neutralOnyx,
   ),
-  labelLarge: TextStyle(
-    fontFamily: 'Roboto',
+  labelLarge: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: neutralOnyx,
   ),
-  labelMedium: TextStyle(
-    fontFamily: 'Roboto',
+  labelMedium: GoogleFonts.manrope(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: neutralOnyx,
   ),
-  labelSmall: TextStyle(
-    fontFamily: 'Roboto',
+  labelSmall: GoogleFonts.manrope(
     fontSize: 10,
     fontWeight: FontWeight.w500,
     color: neutralOnyx,
   ),
 );
-const TextTheme myTextThemeDark = TextTheme(
-  displayLarge: TextStyle(
-    fontFamily: 'Roboto',
+TextTheme myTextThemeDark = TextTheme(
+  displayLarge: GoogleFonts.manrope(
     fontSize: 26,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  displayMedium: TextStyle(
-    fontFamily: 'Roboto',
+  displayMedium: GoogleFonts.manrope(
     fontSize: 24,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  displaySmall: TextStyle(
-    fontFamily: 'Roboto',
+  displaySmall: GoogleFonts.manrope(
     fontSize: 22,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  headlineLarge: TextStyle(
-    fontFamily: 'Roboto',
+  headlineLarge: GoogleFonts.manrope(
     fontSize: 20,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  headlineMedium: TextStyle(
-    fontFamily: 'Roboto',
+  headlineMedium: GoogleFonts.manrope(
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  headlineSmall: TextStyle(
-    fontFamily: 'Roboto',
+  headlineSmall: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  titleLarge: TextStyle(
-    fontFamily: 'Roboto',
+  titleLarge: GoogleFonts.manrope(
     fontSize: 18,
     fontWeight: FontWeight.w700,
     color: neutralPure,
   ),
-  titleMedium: TextStyle(
-    fontFamily: 'Roboto',
+  titleMedium: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w600,
     color: neutralPure,
   ),
-  titleSmall: TextStyle(
-    fontFamily: 'Roboto',
+  titleSmall: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w700,
     color: neutralPure,
   ),
-  bodyLarge: TextStyle(
-    fontFamily: 'Roboto',
+  bodyLarge: GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: neutralPure,
   ),
-  bodyMedium: TextStyle(
-    fontFamily: 'Roboto',
+  bodyMedium: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: neutralPure,
   ),
-  bodySmall: TextStyle(
-    fontFamily: 'Roboto',
+  bodySmall: GoogleFonts.manrope(
     fontSize: 12,
     fontWeight: FontWeight.w400,
     color: neutralPure,
   ),
-  labelLarge: TextStyle(
-    fontFamily: 'Roboto',
+  labelLarge: GoogleFonts.manrope(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: neutralPure,
   ),
-  labelMedium: TextStyle(
-    fontFamily: 'Roboto',
+  labelMedium: GoogleFonts.manrope(
     fontSize: 12,
     fontWeight: FontWeight.w500,
     color: neutralPure,
   ),
-  labelSmall: TextStyle(
-    fontFamily: 'Roboto',
+  labelSmall: GoogleFonts.manrope(
     fontSize: 10,
     fontWeight: FontWeight.w500,
     color: neutralPure,
@@ -186,23 +157,20 @@ const TextTheme myTextThemeDark = TextTheme(
 );
 
 TextStyle bodyXSmall(context) {
-  return TextStyle(
-    fontFamily: 'Roboto',
+  return GoogleFonts.manrope(
     fontSize: 10,
     fontWeight: FontWeight.w400,
     color: Theme.of(context).colorScheme.onSurface,
   );
 }
 
-TextStyle largestBebasNeue = const TextStyle(
-  fontFamily: 'BebasNeue',
+TextStyle largestBebasNeue = GoogleFonts.manrope(
   fontSize: 75,
   fontWeight: FontWeight.w400,
   color: neutralPure,
 );
 
-TextStyle largeBebasNeue = const TextStyle(
-  fontFamily: 'BebasNeue',
+TextStyle largeBebasNeue = GoogleFonts.manrope(
   fontSize: 64,
   fontWeight: FontWeight.w400,
   color: neutralPure,
@@ -217,7 +185,7 @@ const Color darkBackground = backgroundDark;
 
 //Primary Palette - Fresh Modern Colors
 const Color primaryTeal = Color(0xff00BFA5); // Fresh teal
-const Color primaryCoral = Color(0xffFF6B6B); // Vibrant coral
+const Color primaryCoral = Color(0xffFC6011); // Vibrant coral
 const Color primaryIndigo = Color(0xff667EEA); // Modern indigo
 const Color primaryEmerald = Color(0xff10B981); // Fresh emerald
 const Color primaryAmber = Color(0xffF59E0B); // Warm amber
@@ -372,7 +340,7 @@ const Color active = successFresh;
 const Color focus = primaryAmber;
 const Color error = errorFresh;
 
-var primaryColor = primaryIndigo;
+var primaryColor = primaryCoral;
 var secondaryColor = neutralOnyx;
 var bgColor = backgroundDark;
 
