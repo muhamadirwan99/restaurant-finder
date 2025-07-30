@@ -67,7 +67,7 @@ class MainLayoutView extends StatefulWidget {
                     size: controller.currentIndex == 0 ? 26 : 24,
                   ),
                 ),
-                label: 'Beranda',
+                label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: AnimatedContainer(
@@ -84,7 +84,7 @@ class MainLayoutView extends StatefulWidget {
                     size: controller.currentIndex == 1 ? 26 : 24,
                   ),
                 ),
-                label: 'Favorit',
+                label: 'Favorites',
               ),
               BottomNavigationBarItem(
                 icon: AnimatedContainer(

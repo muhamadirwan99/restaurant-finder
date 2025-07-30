@@ -74,14 +74,14 @@ Restaurant Finder is a comprehensive Flutter application that helps users discov
 <div align="center">
 <table>
 <tr>
+<td><img src="assets/screenshots/login.png" width="200" alt="Search"/></td>
 <td><img src="assets/screenshots/home.png" width="200" alt="Home Screen"/></td>
-<td><img src="assets/screenshots/search.png" width="200" alt="Search"/></td>
 <td><img src="assets/screenshots/detail.png" width="200" alt="Restaurant Detail"/></td>
-<td><img src="assets/screenshots/maps.png" width="200" alt="Maps Navigation"/></td>
+<td><img src="assets/screenshots/direction.png" width="200" alt="Maps Navigation"/></td>
 </tr>
 <tr>
+<td align="center"><b>Login</b></td>
 <td align="center"><b>Home Screen</b></td>
-<td align="center"><b>Smart Search</b></td>
 <td align="center"><b>Restaurant Detail</b></td>
 <td align="center"><b>Maps & Navigation</b></td>
 </tr>
@@ -229,7 +229,6 @@ packages/
 
 ### **Key Technologies**
 
-- **State Management**: BLoC Pattern with Cubit
 - **Navigation**: GoRouter for declarative routing
 - **Local Storage**: Hive for offline data persistence
 - **Network**: Dio for HTTP requests
@@ -265,7 +264,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Muhammad Irwan**
 
 - GitHub: [@muhamadirwan99](https://github.com/muhamadirwan99)
-- Email: [muhamadirwan1999@gmail.com](mailto:muhamadirwan1999@gmail.com)
+- Email: [muhamadirwan99@gmail.com](mailto:muhamadirwan99@gmail.com)
 
 ## 🙏 Acknowledgments
 
