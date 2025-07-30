@@ -5,6 +5,7 @@ import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class BerandaController extends State<BerandaView> {
   static late BerandaController instance;
@@ -52,77 +53,284 @@ class BerandaController extends State<BerandaView> {
 
   // Skeleton loading for featured restaurants carousel
   Widget buildFeaturedRestaurantsSkeleton() {
-    return SizedBox(
-      height: 150.0,
-      child: ListView.builder(
-        itemCount: 3,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        itemBuilder: (context, index) {
-          return Container(
-            height: 150.0,
-            width: MediaQuery.of(context).size.width * 0.7,
-            margin: const EdgeInsets.only(right: 16.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16.0),
-              ),
-            ),
-            child: Stack(
-              children: [
-                // Main skeleton container
-                Container(
-                  height: 150.0,
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.grey[300]!,
-                        Colors.grey[200]!,
-                        Colors.grey[300]!,
-                      ],
-                      stops: const [0.0, 0.5, 1.0],
-                    ),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
+    return Skeletonizer(
+      enabled: true,
+      child: SizedBox(
+        height: 150.0,
+        child: ListView.builder(
+          itemCount: 3,
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          itemBuilder: (context, index) {
+            return Container(
+              height: 150.0,
+              width: MediaQuery.of(context).size.width * 0.7,
+              margin: const EdgeInsets.only(right: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16.0),
                 ),
-                // Bottom overlay skeleton
-                Positioned(
-                  bottom: 12,
-                  left: 12,
-                  right: 12,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 14,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[400],
-                          borderRadius: BorderRadius.circular(4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                child: Stack(
+                  children: [
+                    // Main image skeleton
+                    Container(
+                      height: 150.0,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      color: Colors.grey[300],
+                    ),
+                    // Gradient overlay
+                    Container(
+                      height: 150.0,
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.7),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Row(
+                    ),
+                    // Restaurant info overlay
+                    Positioned(
+                      bottom: 12,
+                      left: 12,
+                      right: 12,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 12,
-                            width: MediaQuery.of(context).size.width * 0.25,
+                            height: 14,
+                            width: MediaQuery.of(context).size.width * 0.4,
                             decoration: BoxDecoration(
-                              color: Colors.grey[400],
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(4),
                             ),
                           ),
-                          const Spacer(),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Container(
+                                height: 12,
+                                width: 12,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white70,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Container(
+                                height: 12,
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                decoration: BoxDecoration(
+                                  color: Colors.white70,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ),
+                              const Spacer(),
+                              Container(
+                                height: 20,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber.withOpacity(0.9),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Top right buttons
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            width: 32,
+                            height: 32,
+                            decoration: const BoxDecoration(
+                              color: Colors.black26,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // Skeleton loading for restaurant list
+  Widget buildRestaurantListSkeleton() {
+    return Skeletonizer(
+      enabled: true,
+      child: ListView.builder(
+        itemCount: 5,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.grey[300]!,
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(12.0),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image skeleton
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                const SizedBox(width: 12.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Title skeleton
+                      Container(
+                        height: 16,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4.0),
+                      // City skeleton with icon
+                      Row(
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          const SizedBox(width: 4),
                           Container(
                             height: 12,
-                            width: 30,
+                            width: 80,
                             decoration: BoxDecoration(
-                              color: Colors.grey[400],
-                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6.0),
+                      // Description skeleton
+                      Container(
+                        height: 12,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4.0),
+                      Container(
+                        height: 12,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          // Rating skeleton
+                          Container(
+                            height: 20,
+                            width: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Container(
+                                  width: 20,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Spacer(),
+                          // Arrow skeleton
+                          Container(
+                            height: 16,
+                            width: 16,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(2),
                             ),
                           ),
                         ],
@@ -135,114 +343,6 @@ class BerandaController extends State<BerandaView> {
           );
         },
       ),
-    );
-  }
-
-  // Skeleton loading for restaurant list
-  Widget buildRestaurantListSkeleton() {
-    return ListView.builder(
-      itemCount: 5,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Container(
-          margin: const EdgeInsets.only(bottom: 16.0),
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            border: Border.all(
-              color: Colors.grey[300]!,
-            ),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12.0),
-            ),
-          ),
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image skeleton
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              const SizedBox(width: 12.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title skeleton
-                    Container(
-                      height: 16,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    // City skeleton
-                    Container(
-                      height: 12,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(height: 6.0),
-                    // Description skeleton
-                    Container(
-                      height: 12,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(height: 4.0),
-                    Container(
-                      height: 12,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Row(
-                      children: [
-                        // Rating skeleton
-                        Container(
-                          height: 20,
-                          width: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                        const Spacer(),
-                        // Arrow skeleton
-                        Container(
-                          height: 16,
-                          width: 16,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

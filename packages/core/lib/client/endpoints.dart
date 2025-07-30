@@ -5,7 +5,7 @@ class Endpoints {
   static const Duration connectionTimeout = Duration(seconds: 30);
 
   static const String list = "/list";
-  static const String detail = "/detail";
+  static const String detail = "detail";
   static const String search = "/search";
   static const String review = "review";
   static const String smallImage = "images/small/";

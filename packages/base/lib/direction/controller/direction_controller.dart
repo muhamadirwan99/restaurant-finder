@@ -40,12 +40,8 @@ class DirectionController extends State<DirectionView> {
     final polyline = gmaps.Polyline(
       polylineId: const gmaps.PolylineId('default-polyline'),
       color: primaryColor,
-      width: 5,
+      width: 3,
       points: polylineCoordinates,
-      patterns: [
-        gmaps.PatternItem.dot,
-        gmaps.PatternItem.gap(10),
-      ],
     );
 
     setState(() {

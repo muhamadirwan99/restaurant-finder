@@ -3,6 +3,7 @@ import 'package:base/models/list_restaurant_model.dart';
 import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class BerandaView extends StatefulWidget {
   const BerandaView({super.key});

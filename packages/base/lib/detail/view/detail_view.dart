@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gmaps;
+import 'package:skeletonizer/skeletonizer.dart';
 import '../controller/detail_controller.dart';
 
 class DetailView extends StatefulWidget {
@@ -56,32 +57,223 @@ class DetailView extends StatefulWidget {
   }
 
   Widget _buildLoadingSkeleton() {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 300,
-          pinned: true,
-          backgroundColor: Colors.grey[300],
-          flexibleSpace: Container(
-            color: Colors.grey[300],
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(height: 24, color: Colors.grey[300]),
-                const SizedBox(height: 8),
-                Container(height: 16, width: 200, color: Colors.grey[300]),
-                const SizedBox(height: 16),
-                Container(height: 100, color: Colors.grey[300]),
-              ],
+    return Skeletonizer(
+      enabled: true,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 300,
+            pinned: true,
+            backgroundColor: Colors.grey[300],
+            flexibleSpace: FlexibleSpaceBar(
+              title: const Text('Restaurant Name'),
+              background: Container(
+                color: Colors.grey[300],
+              ),
             ),
           ),
-        ),
-      ],
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Restaurant info skeleton
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 24,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Container(
+                                    height: 16,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[300],
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 60,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 16,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Maps skeleton
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 24,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Description skeleton
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 24,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Container(
+                        height: 16,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Categories skeleton
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 24,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: List.generate(
+                            3,
+                            (index) => Container(
+                                  height: 32,
+                                  width: 80,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                )),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Menu skeleton
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 24,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
