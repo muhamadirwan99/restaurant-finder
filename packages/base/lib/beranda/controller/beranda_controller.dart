@@ -282,8 +282,13 @@ class BerandaController extends State<BerandaView> {
       }
     }
 
-    // Get top 5 cities sorted by count
-    var sortedCities = cityCount.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+    // Sort so that 'Bandung' is always at the top if present, then by count
+    var sortedCities = cityCount.entries.toList()
+      ..sort((a, b) {
+        if (a.key.toLowerCase() == 'bandung') return -1;
+        if (b.key.toLowerCase() == 'bandung') return 1;
+        return b.value.compareTo(a.value);
+      });
 
     return sortedCities.take(5).map((e) => e.key).toList();
   }

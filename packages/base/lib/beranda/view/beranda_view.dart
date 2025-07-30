@@ -399,212 +399,223 @@ class BerandaView extends StatefulWidget {
                     ),
                     const SizedBox(height: 16),
                     FutureBuilder(
-                        future: controller.dataFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return controller.buildRestaurantListSkeleton();
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text('Error: ${snapshot.error}'));
-                          } else if (!snapshot.hasData || snapshot.data == null) {
-                            return const Center(child: Text('No data available'));
+                      future: controller.dataFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return controller.buildRestaurantListSkeleton();
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData || snapshot.data == null) {
+                          return const Center(child: Text('No data available'));
+                        }
+                        ListRestaurantModel? data = snapshot.data as ListRestaurantModel?;
+                        List<Restaurants?>? listRestaurants =
+                            controller.filteredRestaurants ?? data?.restaurants;
+                        if (listRestaurants == null || listRestaurants.isEmpty) {
+                          // Check if it's empty due to search or no data
+                          if (controller.searchController.text.isNotEmpty &&
+                              (controller.allRestaurants?.isNotEmpty ?? false)) {
+                            return const Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.search_off, size: 48, color: Colors.grey),
+                                  SizedBox(height: 16),
+                                  Text('No restaurants found matching your search'),
+                                ],
+                              ),
+                            );
                           }
-                          ListRestaurantModel? data = snapshot.data as ListRestaurantModel?;
-                          List<Restaurants?>? listRestaurants =
-                              controller.filteredRestaurants ?? data?.restaurants;
-                          if (listRestaurants == null || listRestaurants.isEmpty) {
-                            // Check if it's empty due to search or no data
-                            if (controller.searchController.text.isNotEmpty &&
-                                (controller.allRestaurants?.isNotEmpty ?? false)) {
-                              return const Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                          return const Center(child: Text('No restaurants found'));
+                        }
+
+                        // Sort: all Bandung city restaurants at the top
+                        final bandungList = <Restaurants?>[];
+                        final otherList = <Restaurants?>[];
+                        for (final r in listRestaurants) {
+                          if ((r?.city ?? '').toLowerCase() == 'bandung') {
+                            bandungList.add(r);
+                          } else {
+                            otherList.add(r);
+                          }
+                        }
+                        final sortedList = [...bandungList, ...otherList];
+
+                        return ListView.builder(
+                          itemCount: sortedList.length,
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var restaurant = sortedList[index];
+
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 16.0),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface,
+                                border: Border.all(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(
+                                    12.0,
+                                  ),
+                                ),
+                              ),
+                              padding: const EdgeInsets.all(12.0),
+                              child: InkWell(
+                                onTap: () {
+                                  controller
+                                      .goToDetailRestaurant(StringUtils.trimString(restaurant?.id));
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Icon(Icons.search_off, size: 48, color: Colors.grey),
-                                    SizedBox(height: 16),
-                                    Text('No restaurants found matching your search'),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: SizedBox(
+                                        width: 80,
+                                        height: 80,
+                                        child: Image.network(
+                                          IpDatabase.host +
+                                              Endpoints.smallImage +
+                                              StringUtils.trimString(restaurant?.pictureId),
+                                          loadingBuilder: (context, child, loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child;
+                                            }
+                                            return Container(
+                                              color: Colors.grey[200],
+                                              child: Center(
+                                                child: CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  value: loadingProgress.expectedTotalBytes != null
+                                                      ? loadingProgress.cumulativeBytesLoaded /
+                                                          (loadingProgress.expectedTotalBytes ?? 1)
+                                                      : null,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          errorBuilder: (context, error, stackTrace) {
+                                            return Container(
+                                              color: Colors.grey[200],
+                                              child: const Icon(
+                                                Icons.image_not_supported,
+                                                color: Colors.grey,
+                                                size: 24,
+                                              ),
+                                            );
+                                          },
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12.0),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            restaurant?.name ?? 'Unknown Restaurant',
+                                            style:
+                                                Theme.of(context).textTheme.titleMedium?.copyWith(
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 4.0),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                size: 14,
+                                                color: Theme.of(context).colorScheme.primary,
+                                              ),
+                                              const SizedBox(width: 4.0),
+                                              Expanded(
+                                                child: Text(
+                                                  restaurant?.city ?? 'Unknown City',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodySmall
+                                                      ?.copyWith(
+                                                        color:
+                                                            Theme.of(context).colorScheme.primary,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                  maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 6.0),
+                                          Text(
+                                            restaurant?.description ?? 'No description available',
+                                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                                  color: Colors.grey[600],
+                                                ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 8.0),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8.0,
+                                                  vertical: 4.0,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius: BorderRadius.circular(12.0),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.star,
+                                                      size: 14,
+                                                      color: Colors.amber[600],
+                                                    ),
+                                                    const SizedBox(width: 4.0),
+                                                    Text(
+                                                      restaurant?.rating?.toString() ?? '0.0',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall
+                                                          ?.copyWith(
+                                                            fontWeight: FontWeight.w600,
+                                                            color: Theme.of(context)
+                                                                .colorScheme
+                                                                .onPrimaryContainer,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                size: 16,
+                                                color: Colors.grey[400],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              );
-                            }
-                            return const Center(child: Text('No restaurants found'));
-                          }
-                          return ListView.builder(
-                            itemCount: listRestaurants.length,
-                            shrinkWrap: true,
-                            physics: const ScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              var restaurant = listRestaurants[index];
-
-                              return Container(
-                                margin: const EdgeInsets.only(bottom: 16.0),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  border: Border.all(
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(
-                                      12.0,
-                                    ),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(12.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    controller.goToDetailRestaurant(
-                                        StringUtils.trimString(restaurant?.id));
-                                  },
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        child: SizedBox(
-                                          width: 80,
-                                          height: 80,
-                                          child: Image.network(
-                                            IpDatabase.host +
-                                                Endpoints.smallImage +
-                                                StringUtils.trimString(restaurant?.pictureId),
-                                            loadingBuilder: (context, child, loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return Container(
-                                                color: Colors.grey[200],
-                                                child: Center(
-                                                  child: CircularProgressIndicator(
-                                                    strokeWidth: 2,
-                                                    value: loadingProgress.expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress.cumulativeBytesLoaded /
-                                                            (loadingProgress.expectedTotalBytes ??
-                                                                1)
-                                                        : null,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            errorBuilder: (context, error, stackTrace) {
-                                              return Container(
-                                                color: Colors.grey[200],
-                                                child: const Icon(
-                                                  Icons.image_not_supported,
-                                                  color: Colors.grey,
-                                                  size: 24,
-                                                ),
-                                              );
-                                            },
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 12.0),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              restaurant?.name ?? 'Unknown Restaurant',
-                                              style:
-                                                  Theme.of(context).textTheme.titleMedium?.copyWith(
-                                                        fontWeight: FontWeight.w600,
-                                                      ),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 4.0),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.location_on,
-                                                  size: 14,
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                ),
-                                                const SizedBox(width: 4.0),
-                                                Expanded(
-                                                  child: Text(
-                                                    restaurant?.city ?? 'Unknown City',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall
-                                                        ?.copyWith(
-                                                          color:
-                                                              Theme.of(context).colorScheme.primary,
-                                                          fontWeight: FontWeight.w500,
-                                                        ),
-                                                    maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 6.0),
-                                            Text(
-                                              restaurant?.description ?? 'No description available',
-                                              style:
-                                                  Theme.of(context).textTheme.bodySmall?.copyWith(
-                                                        color: Colors.grey[600],
-                                                      ),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 8.0),
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    horizontal: 8.0,
-                                                    vertical: 4.0,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .primaryContainer,
-                                                    borderRadius: BorderRadius.circular(12.0),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 14,
-                                                        color: Colors.amber[600],
-                                                      ),
-                                                      const SizedBox(width: 4.0),
-                                                      Text(
-                                                        restaurant?.rating?.toString() ?? '0.0',
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall
-                                                            ?.copyWith(
-                                                              fontWeight: FontWeight.w600,
-                                                              color: Theme.of(context)
-                                                                  .colorScheme
-                                                                  .onPrimaryContainer,
-                                                            ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  size: 16,
-                                                  color: Colors.grey[400],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        }),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
