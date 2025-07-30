@@ -1,22 +1,19 @@
 import 'package:core/core.dart';
 
 class UserDataDatabase {
-  static UserDataModel userDataModel = UserDataModel();
+  static double lat = 0.0;
+  static double lng = 0.0;
 
   static load() async {
-    userDataModel = mainStorage.get("userDataModel") ?? UserDataModel();
+    lat = mainStorage.get("lat") ?? 0.0;
+    lng = mainStorage.get("lng") ?? 0.0;
   }
 
-  static save(UserDataModel userDataModel) async {
-    mainStorage.put("userDataModel", userDataModel);
+  static save(double lat, double lng) async {
+    mainStorage.put("lat", lat);
+    mainStorage.put("lng", lng);
 
-    UserDataDatabase.userDataModel = userDataModel;
-  }
-
-  static clear() async {
-    // Remove data from storage
-    await mainStorage.delete("userDataModel");
-    // Reset the in-memory model to default
-    userDataModel = UserDataModel();
+    UserDataDatabase.lat = lat;
+    UserDataDatabase.lng = lng;
   }
 }

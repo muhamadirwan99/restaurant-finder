@@ -20,3 +20,6 @@ export 'profile/view/profile_view.dart';
 
 //DETAIL
 export 'detail/view/detail_view.dart';
+
+//DIRECTION
+export 'direction/view/direction_view.dart';

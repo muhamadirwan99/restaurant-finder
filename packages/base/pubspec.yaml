@@ -13,7 +13,9 @@ dependencies:
   core:
     path: ../core
   google_maps_flutter: ^2.6.1
-  geocoding: ^4.0.0
+  geocoding: ^3.0.0
+  geolocator: ^12.0.0
+  flutter_dotenv: ^5.1.0
 
 publish_to: none
 

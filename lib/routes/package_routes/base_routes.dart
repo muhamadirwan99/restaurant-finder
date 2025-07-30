@@ -1,4 +1,5 @@
 import 'package:base/base.dart';
+import 'package:base/models/detail_restaurant_model.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,22 @@ final List<GoRoute> baseRoutes = [
       final String? id = state.extra as String?;
 
       return DetailView(id: StringUtils.trimString(id));
+    },
+  ),
+  GoRoute(
+    path: RouterUtils.direction,
+    builder: (BuildContext context, GoRouterState state) {
+      final List<dynamic> extraData = state.extra as List<dynamic>;
+
+      double lat = extraData[0] ?? 0.0;
+      double lng = extraData[1] ?? 0.0;
+      Restaurant? restaurant = extraData[2] as Restaurant?;
+
+      return DirectionView(
+        lat: lat,
+        lng: lng,
+        restaurant: restaurant,
+      );
     },
   ),
 ];

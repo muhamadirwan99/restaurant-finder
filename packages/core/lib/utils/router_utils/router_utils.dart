@@ -4,6 +4,7 @@ class RouterUtils {
   static const String beranda = '/beranda';
   static const String mainLayout = '/main';
   static const String detail = '/detail';
+  static const String direction = '/direction';
 
   //Auth Route
   static const String login = '/login';

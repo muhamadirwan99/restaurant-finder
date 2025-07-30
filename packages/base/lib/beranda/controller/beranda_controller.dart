@@ -3,6 +3,7 @@ import 'package:base/models/list_restaurant_model.dart';
 import 'package:base/service/api_service_base.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 class BerandaController extends State<BerandaView> {
   static late BerandaController instance;
@@ -300,9 +301,44 @@ class BerandaController extends State<BerandaView> {
     );
   }
 
+  getLatLongUser() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Cek apakah layanan lokasi aktif
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Layanan lokasi tidak aktif, bisa tampilkan pesan ke user
+      return null;
+    }
+
+    // Cek dan minta izin lokasi
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Izin ditolak
+        return null;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Izin ditolak permanen
+      return null;
+    }
+
+    // Ambil posisi saat ini
+    final position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    UserDataDatabase.save(position.latitude, position.longitude);
+  }
+
   @override
   void initState() {
     instance = this;
+    getLatLongUser();
     dataFuture = getListRestaurant();
     searchController.addListener(() {
       searchRestaurants(searchController.text);

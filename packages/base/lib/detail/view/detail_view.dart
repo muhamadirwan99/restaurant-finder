@@ -23,14 +23,29 @@ class DetailView extends StatefulWidget {
           : controller.errorMessage != null
               ? _buildErrorState(context, controller)
               : _buildDetailContent(context, controller),
-      floatingActionButton: !controller.isLoading &&
-              controller.errorMessage == null &&
-              FirebaseAuth.instance.currentUser != null
-          ? FloatingActionButton.extended(
-              onPressed: () => _showAddReviewDialog(context, controller),
-              icon: const Icon(Icons.add_comment),
-              label: const Text('Add Review'),
-              backgroundColor: Theme.of(context).primaryColor,
+      floatingActionButton: !controller.isLoading && controller.errorMessage == null
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Direction button - always visible when not loading and no error
+                FloatingActionButton.extended(
+                  onPressed: () => _navigateToDirection(context, controller),
+                  icon: const Icon(Icons.directions),
+                  label: const Text('Get Directions'),
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  heroTag: "direction_fab",
+                ),
+                const SizedBox(height: 16),
+                // Review button - only visible when user is logged in
+                if (FirebaseAuth.instance.currentUser != null)
+                  FloatingActionButton.extended(
+                    onPressed: () => _showAddReviewDialog(context, controller),
+                    icon: const Icon(Icons.add_comment),
+                    label: const Text('Add Review'),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    heroTag: "review_fab",
+                  ),
+              ],
             )
           : null,
     );
@@ -741,6 +756,20 @@ class DetailView extends StatefulWidget {
           ],
         );
       },
+    );
+  }
+
+  void _navigateToDirection(BuildContext context, DetailController controller) {
+    // Navigate to direction page with coordinates as list [lat, lng]
+    final coordinates = [
+      controller.latitude,
+      controller.longitude,
+      controller.detailData?.restaurant
+    ];
+
+    newRouter.push(
+      RouterUtils.direction,
+      extra: coordinates,
     );
   }
 
