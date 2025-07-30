@@ -1,9 +1,16 @@
 import 'package:core/core.dart';
 
+part 'list_restaurant_model.g.dart';
+
+@HiveType(typeId: 0)
 class ListRestaurantModel {
+  @HiveField(0)
   bool? error;
+  @HiveField(1)
   String? message;
+  @HiveField(2)
   int? count;
+  @HiveField(3)
   List<Restaurants>? restaurants;
 
   ListRestaurantModel({this.error, this.message, this.count, this.restaurants});
@@ -32,12 +39,19 @@ class ListRestaurantModel {
   }
 }
 
+@HiveType(typeId: 1)
 class Restaurants {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? name;
+  @HiveField(2)
   String? description;
+  @HiveField(3)
   String? pictureId;
+  @HiveField(4)
   String? city;
+  @HiveField(5)
   String? rating;
 
   Restaurants({this.id, this.name, this.description, this.pictureId, this.city, this.rating});

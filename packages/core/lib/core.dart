@@ -26,7 +26,6 @@ export 'package:google_sign_in/google_sign_in.dart';
 
 //Model
 export 'models/global_model.dart';
-export 'models/user_data_model.dart';
 export 'models/theme_adapter.dart';
 export 'models/image_model.dart';
 

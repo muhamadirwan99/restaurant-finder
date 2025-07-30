@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:base/base.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,8 @@ class Setup {
         Hive.registerAdapter(ThemeModeAdapter());
 
         //User Data Model
-        Hive.registerAdapter(UserDataModelAdapter());
-        Hive.registerAdapter(DataUserAdapter());
+        Hive.registerAdapter(ListRestaurantModelAdapter());
+        Hive.registerAdapter(RestaurantsAdapter());
       }
 
       mainStorage = await Hive.openBox("restaurant_finder");

@@ -1,4 +1,6 @@
 import 'package:base/models/detail_restaurant_model.dart';
+import 'package:base/models/list_restaurant_model.dart';
+import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/gestures.dart';
@@ -27,7 +29,7 @@ class DetailView extends StatefulWidget {
           ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Direction button - always visible when not loading and no error
+                // Favorite button
                 FloatingActionButton(
                   onPressed: () => _navigateToDirection(context, controller),
                   backgroundColor: Theme.of(context).colorScheme.primary,
@@ -132,7 +134,7 @@ class DetailView extends StatefulWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildRestaurantInfo(context, restaurant),
+              _buildRestaurantInfo(context, controller, restaurant),
               _buildMaps(context, controller, restaurant),
               _buildDescription(context, restaurant),
               _buildCategories(context, restaurant),
@@ -207,7 +209,8 @@ class DetailView extends StatefulWidget {
     );
   }
 
-  Widget _buildRestaurantInfo(BuildContext context, Restaurant restaurant) {
+  Widget _buildRestaurantInfo(
+      BuildContext context, DetailController controller, Restaurant restaurant) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -281,19 +284,89 @@ class DetailView extends StatefulWidget {
           ),
           const SizedBox(height: 12),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.place,
-                size: 16,
-                color: Colors.grey[600],
+              Row(
+                children: [
+                  Icon(
+                    Icons.place,
+                    size: 16,
+                    color: Colors.grey[600],
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    restaurant.address ?? 'Address not available',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                        ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Text(
-                  restaurant.address ?? 'Address not available',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
+              GestureDetector(
+                onTap: () async {
+                  Restaurants? favoriteRestaurant = Restaurants(
+                    id: restaurant.id,
+                    name: restaurant.name,
+                    description: restaurant.description,
+                    pictureId: restaurant.pictureId,
+                    city: restaurant.city,
+                    rating: restaurant.rating.toString(),
+                  );
+
+                  try {
+                    final favoriteNotifier = FavoriteNotifier();
+                    await favoriteNotifier.toggleFavorite(favoriteRestaurant);
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: ListenableBuilder(
+                  listenable: FavoriteNotifier(),
+                  builder: (context, child) {
+                    final isFavorite = FavoriteNotifier().isFavorite(restaurant.id ?? '');
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: isFavorite
+                            ? Colors.red.withOpacity(0.15)
+                            : Colors.black.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                        boxShadow: isFavorite
+                            ? [
+                                BoxShadow(
+                                  color: Colors.red.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  spreadRadius: 2,
+                                ),
+                              ]
+                            : [],
                       ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          return ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          );
+                        },
+                        child: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          key: ValueKey(isFavorite),
+                          color: isFavorite ? Colors.red : Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

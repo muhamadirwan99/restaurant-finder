@@ -1,7 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:base/database/favorit_database.dart';
 import 'package:base/models/detail_restaurant_model.dart';
+import 'package:base/models/list_restaurant_model.dart';
 import 'package:base/service/api_service_base.dart';
+import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -25,6 +28,33 @@ class DetailController extends State<DetailView> {
     instance = this;
     super.initState();
     getDetailRestaurant();
+    // Initialize favorite notifier
+    _initializeFavorites();
+  }
+
+  Future<void> _initializeFavorites() async {
+    try {
+      await FavoriteNotifier().initialize();
+    } catch (e) {
+      print('Error initializing favorites: $e');
+    }
+  }
+
+  // Favorite functionality
+  Future<void> toggleFavorite(Restaurants restaurant) async {
+    try {
+      await FavoritDatabase.toggleFavorite(restaurant);
+      setState(() {}); // Update UI to reflect favorite status change
+    } catch (e) {
+      // Show error message to user
+      if (mounted) {
+        showInfoDialog('Error updating favorites: $e');
+      }
+    }
+  }
+
+  bool isFavorite(String restaurantId) {
+    return FavoritDatabase.isFavorite(restaurantId);
   }
 
   getLatLongFromAddress(String address) async {

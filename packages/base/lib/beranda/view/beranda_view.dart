@@ -1,5 +1,6 @@
 import 'package:base/beranda/controller/beranda_controller.dart';
 import 'package:base/models/list_restaurant_model.dart';
+import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +13,7 @@ class BerandaView extends StatefulWidget {
         preferredSize: const Size.fromHeight(64),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                Theme.of(context).colorScheme.secondary,
-              ],
-            ),
+            color: Theme.of(context).colorScheme.primary,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -58,10 +51,11 @@ class BerandaView extends StatefulWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            "Discover amazing places to eat",
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Colors.white.withOpacity(0.9),
-                                  fontSize: 12,
+                            "Restaurant Finder",
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
                                 ),
                           ),
                         ),
@@ -268,21 +262,81 @@ class BerandaView extends StatefulWidget {
                                       ],
                                     ),
                                   ),
-                                  // Clickable indicator
+                                  // Clickable indicator and favorite button
                                   Positioned(
                                     top: 8,
                                     right: 8,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.black26,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.touch_app,
-                                        color: Colors.white70,
-                                        size: 16,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        // Favorite button
+                                        GestureDetector(
+                                          onTap: () async {
+                                            if (restaurant != null) {
+                                              controller.toggleFavorite(restaurant);
+                                            }
+                                          },
+                                          child: ListenableBuilder(
+                                            listenable: FavoriteNotifier(),
+                                            builder: (context, child) {
+                                              final isFavorite = FavoriteNotifier()
+                                                  .isFavorite(restaurant?.id ?? '');
+                                              return AnimatedContainer(
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.easeInOut,
+                                                padding: const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: isFavorite
+                                                      ? Colors.red.withOpacity(0.15)
+                                                      : Colors.black.withOpacity(0.3),
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: isFavorite
+                                                      ? [
+                                                          BoxShadow(
+                                                            color: Colors.red.withOpacity(0.3),
+                                                            blurRadius: 8,
+                                                            spreadRadius: 2,
+                                                          ),
+                                                        ]
+                                                      : [],
+                                                ),
+                                                child: AnimatedSwitcher(
+                                                  duration: const Duration(milliseconds: 300),
+                                                  transitionBuilder:
+                                                      (Widget child, Animation<double> animation) {
+                                                    return ScaleTransition(
+                                                      scale: animation,
+                                                      child: child,
+                                                    );
+                                                  },
+                                                  child: Icon(
+                                                    isFavorite
+                                                        ? Icons.favorite
+                                                        : Icons.favorite_border,
+                                                    key: ValueKey(isFavorite),
+                                                    color: isFavorite ? Colors.red : Colors.white,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+
+                                        const SizedBox(width: 8),
+                                        Container(
+                                          padding: const EdgeInsets.all(4),
+                                          decoration: const BoxDecoration(
+                                            color: Colors.black26,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Icon(
+                                            Icons.touch_app,
+                                            color: Colors.white70,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -598,6 +652,41 @@ class BerandaView extends StatefulWidget {
                                                 ),
                                               ),
                                               const Spacer(),
+                                              // Favorite button
+                                              GestureDetector(
+                                                onTap: () {
+                                                  if (restaurant != null) {
+                                                    controller.toggleFavorite(restaurant);
+                                                  }
+                                                },
+                                                child: ListenableBuilder(
+                                                  listenable: FavoriteNotifier(),
+                                                  builder: (context, child) {
+                                                    final isFavorite = FavoriteNotifier()
+                                                        .isFavorite(restaurant?.id ?? '');
+                                                    return AnimatedContainer(
+                                                      duration: const Duration(milliseconds: 300),
+                                                      padding: const EdgeInsets.all(6),
+                                                      decoration: BoxDecoration(
+                                                        color: isFavorite
+                                                            ? Colors.red.withOpacity(0.1)
+                                                            : Colors.grey.withOpacity(0.1),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Icon(
+                                                        isFavorite
+                                                            ? Icons.favorite
+                                                            : Icons.favorite_border,
+                                                        color: isFavorite
+                                                            ? Colors.red
+                                                            : Colors.grey[600],
+                                                        size: 18,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              const SizedBox(width: 8),
                                               Icon(
                                                 Icons.arrow_forward_ios,
                                                 size: 16,

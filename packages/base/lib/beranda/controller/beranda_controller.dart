@@ -1,6 +1,7 @@
 import 'package:base/beranda/view/beranda_view.dart';
 import 'package:base/models/list_restaurant_model.dart';
 import 'package:base/service/api_service_base.dart';
+import 'package:base/notifier/favorite_notifier.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -301,6 +302,24 @@ class BerandaController extends State<BerandaView> {
     );
   }
 
+  // Favorite functionality
+  Future<void> toggleFavorite(Restaurants restaurant) async {
+    try {
+      final favoriteNotifier = FavoriteNotifier();
+      await favoriteNotifier.toggleFavorite(restaurant);
+      // No need for setState as ListenableBuilder will handle UI updates
+    } catch (e) {
+      // Show error message to user
+      if (mounted) {
+        showInfoDialog('Error updating favorites: $e');
+      }
+    }
+  }
+
+  bool isFavorite(String restaurantId) {
+    return FavoriteNotifier().isFavorite(restaurantId);
+  }
+
   getLatLongUser() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -340,6 +359,7 @@ class BerandaController extends State<BerandaView> {
     instance = this;
     getLatLongUser();
     dataFuture = getListRestaurant();
+
     searchController.addListener(() {
       searchRestaurants(searchController.text);
     });
@@ -353,6 +373,16 @@ class BerandaController extends State<BerandaView> {
     });
 
     super.initState();
+    // Initialize favorite notifier
+    _initializeFavorites();
+  }
+
+  Future<void> _initializeFavorites() async {
+    try {
+      await FavoriteNotifier().initialize();
+    } catch (e) {
+      print('Error initializing favorites: $e');
+    }
   }
 
   @override

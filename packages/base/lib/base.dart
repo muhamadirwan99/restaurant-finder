@@ -23,3 +23,6 @@ export 'detail/view/detail_view.dart';
 
 //DIRECTION
 export 'direction/view/direction_view.dart';
+
+//Models
+export 'models/list_restaurant_model.dart';
