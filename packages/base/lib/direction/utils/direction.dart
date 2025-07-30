@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:core/core.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../models/direction_model.dart';
@@ -81,7 +83,7 @@ class Direction {
         polylinePoints: polylinePoints,
       );
     } catch (e) {
-      print('Error parsing DirectionModel: $e');
+      log('Error parsing DirectionModel: $e');
       rethrow;
     }
   }

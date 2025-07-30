@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:base/database/favorit_database.dart';
 import 'package:base/models/detail_restaurant_model.dart';
 import 'package:base/models/list_restaurant_model.dart';
@@ -36,7 +38,7 @@ class DetailController extends State<DetailView> {
     try {
       await FavoriteNotifier().initialize();
     } catch (e) {
-      print('Error initializing favorites: $e');
+      log('Error initializing favorites: $e');
     }
   }
 

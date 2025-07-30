@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:base/base.dart';
 import 'package:core/core.dart';
 
@@ -21,7 +23,7 @@ class FavoritDatabase {
     } catch (e) {
       // If there's an error loading favorites, start with empty list
       restaurants = [];
-      print('Error loading favorites: $e');
+      log('Error loading favorites: $e');
     }
   }
 
@@ -31,7 +33,7 @@ class FavoritDatabase {
       await mainStorage.put("favorite_restaurants", data);
       FavoritDatabase.restaurants = List.from(restaurants);
     } catch (e) {
-      print('Error saving favorites: $e');
+      log('Error saving favorites: $e');
     }
   }
 

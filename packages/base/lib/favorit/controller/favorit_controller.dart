@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:base/favorit/view/favorit_view.dart';
 import 'package:base/notifier/favorite_notifier.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class FavoritController extends State<FavoritView> {
     try {
       await FavoriteNotifier().initialize();
     } catch (e) {
-      print('Error initializing favorites: $e');
+      log('Error initializing favorites: $e');
     }
   }
 

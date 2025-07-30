@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:base/beranda/view/beranda_view.dart';
 import 'package:base/models/list_restaurant_model.dart';
 import 'package:base/service/api_service_base.dart';
@@ -481,7 +483,7 @@ class BerandaController extends State<BerandaView> {
     try {
       await FavoriteNotifier().initialize();
     } catch (e) {
-      print('Error initializing favorites: $e');
+      log('Error initializing favorites: $e');
     }
   }
 

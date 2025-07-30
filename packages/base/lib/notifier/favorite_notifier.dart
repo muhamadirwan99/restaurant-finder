@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:base/database/favorit_database.dart';
 import 'package:base/models/list_restaurant_model.dart';
@@ -21,7 +23,7 @@ class FavoriteNotifier extends ChangeNotifier {
       _isLoaded = true;
       notifyListeners();
     } catch (e) {
-      print('Error initializing favorites: $e');
+      log('Error initializing favorites: $e');
       _favorites = [];
       _isLoaded = true;
       notifyListeners();
@@ -42,7 +44,7 @@ class FavoriteNotifier extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print('Error adding to favorites: $e');
+      log('Error adding to favorites: $e');
       rethrow;
     }
   }
@@ -56,7 +58,7 @@ class FavoriteNotifier extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print('Error removing from favorites: $e');
+      log('Error removing from favorites: $e');
       rethrow;
     }
   }
@@ -72,7 +74,7 @@ class FavoriteNotifier extends ChangeNotifier {
 
       return !wasRemovedInitially; // Return true if added, false if removed
     } catch (e) {
-      print('Error toggling favorite: $e');
+      log('Error toggling favorite: $e');
       rethrow;
     }
   }
@@ -84,7 +86,7 @@ class FavoriteNotifier extends ChangeNotifier {
       _favorites = FavoritDatabase.getAllFavorites();
       notifyListeners();
     } catch (e) {
-      print('Error refreshing favorites: $e');
+      log('Error refreshing favorites: $e');
     }
   }
 
@@ -95,7 +97,7 @@ class FavoriteNotifier extends ChangeNotifier {
       _favorites = [];
       notifyListeners();
     } catch (e) {
-      print('Error clearing favorites: $e');
+      log('Error clearing favorites: $e');
       rethrow;
     }
   }
