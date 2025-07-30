@@ -136,7 +136,10 @@ class LoginController extends State<LoginView> {
     try {
       showCircleDialogLoading();
 
-      // Trigger the authentication flow
+      // Sign out from Google first to force account picker
+      await _googleSignIn.signOut();
+
+      // Trigger the authentication flow with account picker
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       if (googleUser == null) {

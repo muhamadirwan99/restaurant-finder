@@ -12,6 +12,7 @@ class ProfileController extends State<ProfileView> {
   String email = '';
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   getUserNameFromFirebase() async {
     final userId = FirebaseAuth.instance.currentUser?.uid;
@@ -193,8 +194,14 @@ class ProfileController extends State<ProfileView> {
     );
   }
 
-  doLogout() {
-    FirebaseAuth.instance.signOut();
+  doLogout() async {
+    // Logout dari Firebase Auth
+    await FirebaseAuth.instance.signOut();
+
+    // Logout dari Google Sign-In untuk memastikan account picker muncul next time
+    await _googleSignIn.signOut();
+
+    // Clear local data
     UserDataDatabase.save(0.0, 0.0);
     UserDataDatabase.saveUserData('', '');
     FavoritDatabase.save([]);
@@ -266,10 +273,10 @@ class ProfileController extends State<ProfileView> {
           ),
           const SizedBox(width: 8),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).pop();
               // Implement logout logic here
-              doLogout();
+              await doLogout();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange.shade400,
