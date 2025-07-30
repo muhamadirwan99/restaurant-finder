@@ -28,22 +28,24 @@ class DetailView extends StatefulWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // Direction button - always visible when not loading and no error
-                FloatingActionButton.extended(
+                FloatingActionButton(
                   onPressed: () => _navigateToDirection(context, controller),
-                  icon: const Icon(Icons.directions),
-                  label: const Text('Get Directions'),
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
+                  elevation: 6,
                   heroTag: "direction_fab",
+                  child: const Icon(Icons.directions, size: 24),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 // Review button - only visible when user is logged in
                 if (FirebaseAuth.instance.currentUser != null)
-                  FloatingActionButton.extended(
+                  FloatingActionButton(
                     onPressed: () => _showAddReviewDialog(context, controller),
-                    icon: const Icon(Icons.add_comment),
-                    label: const Text('Add Review'),
                     backgroundColor: Theme.of(context).primaryColor,
+                    foregroundColor: Colors.white,
+                    elevation: 6,
                     heroTag: "review_fab",
+                    child: const Icon(Icons.rate_review, size: 24),
                   ),
               ],
             )
