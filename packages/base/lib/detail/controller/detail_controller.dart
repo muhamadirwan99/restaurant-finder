@@ -2,6 +2,7 @@ import 'package:base/models/detail_restaurant_model.dart';
 import 'package:base/service/api_service_base.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import '../view/detail_view.dart';
 
 class DetailController extends State<DetailView> {
@@ -13,12 +14,24 @@ class DetailController extends State<DetailView> {
   bool isLoading = true;
   String? errorMessage;
   bool isDescriptionExpanded = false;
+  double latitude = 0;
+  double longitude = 0;
 
   @override
   void initState() {
     instance = this;
     super.initState();
     getDetailRestaurant();
+  }
+
+  getLatLongFromAddress(String address) async {
+    List<Location> listData = await locationFromAddress(address);
+    Location data = listData.first;
+
+    setState(() {
+      latitude = data.latitude;
+      longitude = data.longitude;
+    });
   }
 
   getDetailRestaurant() async {
@@ -29,6 +42,8 @@ class DetailController extends State<DetailView> {
       });
 
       DetailRestaurantModel result = await api.detailRestaurant(id: widget.id);
+
+      await getLatLongFromAddress('${result.restaurant?.address}, ${result.restaurant?.city}');
 
       setState(() {
         detailData = result;

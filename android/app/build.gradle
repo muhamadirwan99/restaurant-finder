@@ -16,6 +16,17 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+// Load .env file
+def envProperties = new Properties()
+def envFile = file('../../.env')
+if (envFile.exists()) {
+    envFile.withReader('UTF-8') { reader ->
+        envProperties.load(reader)
+    }
+} else {
+    println "Warning: .env file not found at ${envFile.absolutePath}"
+}
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -53,6 +64,12 @@ android {
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        
+        // Add Google Maps API Key from .env
+        manifestPlaceholders = [
+            googleMapsApiKey: envProperties.getProperty('GOOGLE_MAPS_API_KEY', 'YOUR_API_KEY'),
+            applicationName: "io.flutter.app.FlutterApplication"
+        ]
     }
 
     buildTypes {

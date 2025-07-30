@@ -3,6 +3,12 @@
         android:label="Restaurant Finder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <!-- Google Maps API Key - Must be in application level -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${googleMapsApiKey}" />
+            
         <activity
             android:name=".MainActivity"
             android:exported="true"

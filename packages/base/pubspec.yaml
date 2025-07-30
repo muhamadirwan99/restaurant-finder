@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
+  google_maps_flutter: ^2.6.1
+  geocoding: ^4.0.0
 
 publish_to: none
 

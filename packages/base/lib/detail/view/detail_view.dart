@@ -1,6 +1,9 @@
 import 'package:base/models/detail_restaurant_model.dart';
 import 'package:core/core.dart';
+import 'package:flutter/foundation.dart' as fd;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as gmaps;
 import '../controller/detail_controller.dart';
 
 class DetailView extends StatefulWidget {
@@ -103,6 +106,7 @@ class DetailView extends StatefulWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildRestaurantInfo(context, restaurant),
+              _buildMaps(context, controller, restaurant),
               _buildDescription(context, restaurant),
               _buildCategories(context, restaurant),
               _buildMenuSection(context, restaurant),
@@ -266,6 +270,43 @@ class DetailView extends StatefulWidget {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMaps(BuildContext context, DetailController controller, Restaurant restaurant) {
+    gmaps.LatLng position = gmaps.LatLng(controller.latitude, controller.longitude);
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Location',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 200,
+            child: gmaps.GoogleMap(
+              initialCameraPosition: gmaps.CameraPosition(target: position, zoom: 14),
+              markers: {
+                gmaps.Marker(markerId: gmaps.MarkerId(restaurant.id ?? '0'), position: position)
+              },
+              gestureRecognizers: <fd.Factory<OneSequenceGestureRecognizer>>{
+                fd.Factory<OneSequenceGestureRecognizer>(
+                  () => EagerGestureRecognizer(),
+                ),
+              },
+              mapType: gmaps.MapType.normal,
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+            ),
           ),
         ],
       ),

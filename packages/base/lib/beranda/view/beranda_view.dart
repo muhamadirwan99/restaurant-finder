@@ -9,7 +9,7 @@ class BerandaView extends StatefulWidget {
   Widget build(BuildContext context, BerandaController controller) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
+        preferredSize: const Size.fromHeight(64),
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -57,26 +57,12 @@ class BerandaView extends StatefulWidget {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Restaurant Finder",
-                                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                "Discover amazing places to eat",
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                      color: Colors.white.withOpacity(0.9),
-                                      fontSize: 12,
-                                    ),
-                              ),
-                            ],
+                          child: Text(
+                            "Discover amazing places to eat",
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Colors.white.withOpacity(0.9),
+                                  fontSize: 12,
+                                ),
                           ),
                         ),
                       ],
