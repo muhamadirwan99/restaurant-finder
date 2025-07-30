@@ -23,6 +23,16 @@ class DetailView extends StatefulWidget {
           : controller.errorMessage != null
               ? _buildErrorState(context, controller)
               : _buildDetailContent(context, controller),
+      floatingActionButton: !controller.isLoading &&
+              controller.errorMessage == null &&
+              FirebaseAuth.instance.currentUser != null
+          ? FloatingActionButton.extended(
+              onPressed: () => _showAddReviewDialog(context, controller),
+              icon: const Icon(Icons.add_comment),
+              label: const Text('Add Review'),
+              backgroundColor: Theme.of(context).primaryColor,
+            )
+          : null,
     );
   }
 
@@ -291,21 +301,24 @@ class DetailView extends StatefulWidget {
                 ),
           ),
           const SizedBox(height: 8),
-          SizedBox(
-            height: 200,
-            child: gmaps.GoogleMap(
-              initialCameraPosition: gmaps.CameraPosition(target: position, zoom: 14),
-              markers: {
-                gmaps.Marker(markerId: gmaps.MarkerId(restaurant.id ?? '0'), position: position)
-              },
-              gestureRecognizers: <fd.Factory<OneSequenceGestureRecognizer>>{
-                fd.Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer(),
-                ),
-              },
-              mapType: gmaps.MapType.normal,
-              myLocationEnabled: true,
-              zoomControlsEnabled: false,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: SizedBox(
+              height: 200,
+              child: gmaps.GoogleMap(
+                initialCameraPosition: gmaps.CameraPosition(target: position, zoom: 14),
+                markers: {
+                  gmaps.Marker(markerId: gmaps.MarkerId(restaurant.id ?? '0'), position: position)
+                },
+                gestureRecognizers: <fd.Factory<OneSequenceGestureRecognizer>>{
+                  fd.Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                },
+                mapType: gmaps.MapType.normal,
+                myLocationEnabled: true,
+                zoomControlsEnabled: false,
+              ),
             ),
           ),
         ],
@@ -673,6 +686,61 @@ class DetailView extends StatefulWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showAddReviewDialog(BuildContext context, DetailController controller) {
+    final TextEditingController reviewController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Review'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Share your experience about this restaurant:',
+                style: TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: reviewController,
+                maxLines: 4,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Write your review here...',
+                  labelText: 'Review',
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                if (reviewController.text.trim().isNotEmpty) {
+                  Get.back();
+                  await controller.submitReviewRestaurant(
+                    review: reviewController.text.trim(),
+                  );
+                } else {
+                  showInfoDialog(
+                    "Please write a review before submitting",
+                  );
+                }
+              },
+              child: const Text('Submit'),
+            ),
+          ],
+        );
+      },
     );
   }
 

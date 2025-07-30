@@ -112,14 +112,10 @@ class ApiServiceBase {
         },
       );
 
-      if (response.statusCode == 200) {
-        if (!response.data["error"]) {
-          return ReviewRestaurantModel.fromJson(json.decode(response.toString()));
-        } else {
-          throw CustomExceptionDio(response.data["message"]);
-        }
+      if (!response.data["error"]) {
+        return ReviewRestaurantModel.fromJson(json.decode(response.toString()));
       } else {
-        throw CustomExceptionDio("Failed to get reviewRestaurant");
+        throw CustomExceptionDio(response.data["message"]);
       }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout) {
