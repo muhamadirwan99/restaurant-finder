@@ -17,6 +17,17 @@ class DirectionView extends StatefulWidget {
 
   Widget build(context, DirectionController controller) {
     controller.view = this;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    Color getCardColor() => isDark ? Colors.grey[900]! : Colors.white;
+    Color getShadowColor() =>
+        isDark ? Colors.black.withOpacity(0.5) : Colors.black.withOpacity(0.15);
+    Color getPrimaryTextColor() => isDark ? Colors.white : Colors.black87;
+    Color getSecondaryTextColor() => isDark ? Colors.white70 : Colors.grey[700]!;
+    Color getAppBarGradientStart() =>
+        isDark ? Colors.grey[900]!.withOpacity(0.98) : Colors.white.withOpacity(0.95);
+    Color getAppBarGradientEnd() =>
+        isDark ? Colors.grey[900]!.withOpacity(0.8) : Colors.white.withOpacity(0.8);
 
     return Scaffold(
       body: Stack(
@@ -79,8 +90,8 @@ class DirectionView extends StatefulWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Colors.white.withOpacity(0.95),
-                    Colors.white.withOpacity(0.8),
+                    getAppBarGradientStart(),
+                    getAppBarGradientEnd(),
                     Colors.transparent,
                   ],
                 ),
@@ -89,12 +100,12 @@ class DirectionView extends StatefulWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: getCardColor(),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.arrow_back, color: Colors.black87),
+                      icon: Icon(Icons.arrow_back, color: getPrimaryTextColor()),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -114,7 +125,7 @@ class DirectionView extends StatefulWidget {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withOpacity(isDark ? 0.08 : 0.2),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Icon(
@@ -185,11 +196,11 @@ class DirectionView extends StatefulWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: getCardColor(),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.15),
+                    color: getShadowColor(),
                     blurRadius: 20,
                     offset: const Offset(0, 8),
                   ),
@@ -213,12 +224,12 @@ class DirectionView extends StatefulWidget {
                               size: 20,
                             ),
                             const SizedBox(width: 8),
-                            const Text(
+                            Text(
                               'Informasi Rute',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black87,
+                                color: getPrimaryTextColor(),
                               ),
                             ),
                           ],
@@ -232,6 +243,7 @@ class DirectionView extends StatefulWidget {
                                 label: 'Estimasi Waktu',
                                 value: controller.estimatedTime ?? 'Menghitung...',
                                 color: Colors.orange,
+                                isDark: isDark,
                               ),
                             ),
                             const SizedBox(width: 16),
@@ -241,6 +253,7 @@ class DirectionView extends StatefulWidget {
                                 label: 'Jarak',
                                 value: controller.estimatedDistance ?? 'Menghitung...',
                                 color: Colors.green,
+                                isDark: isDark,
                               ),
                             ),
                           ],
@@ -250,7 +263,7 @@ class DirectionView extends StatefulWidget {
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: primaryColor.withOpacity(0.1),
+                              color: primaryColor.withOpacity(isDark ? 0.18 : 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
@@ -266,7 +279,7 @@ class DirectionView extends StatefulWidget {
                                     restaurant!.address!,
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[700],
+                                      color: getSecondaryTextColor(),
                                       fontWeight: FontWeight.w500,
                                     ),
                                     maxLines: 2,
@@ -302,7 +315,7 @@ class DirectionView extends StatefulWidget {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: primaryColor.withOpacity(0.3),
+                          color: primaryColor.withOpacity(isDark ? 0.5 : 0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -342,11 +355,11 @@ class DirectionView extends StatefulWidget {
                   height: 56,
                   width: 56,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: getCardColor(),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: getShadowColor(),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),
@@ -372,6 +385,7 @@ class DirectionView extends StatefulWidget {
     required String label,
     required String value,
     required Color color,
+    required bool isDark,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -384,7 +398,7 @@ class DirectionView extends StatefulWidget {
               label,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: isDark ? Colors.white70 : Colors.grey[600],
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -393,10 +407,10 @@ class DirectionView extends StatefulWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: isDark ? Colors.white : Colors.black87,
           ),
         ),
       ],

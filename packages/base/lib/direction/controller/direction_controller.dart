@@ -50,7 +50,7 @@ class DirectionController extends State<DirectionView> {
 
     if (result != null) {
       mapController.animateCamera(
-        gmaps.CameraUpdate.newLatLngBounds(result.bounds, 100),
+        gmaps.CameraUpdate.newLatLngBounds(result.bounds, 300),
       );
     }
   }
@@ -98,7 +98,7 @@ class DirectionController extends State<DirectionView> {
       if (polyline.points.isNotEmpty) {
         final bounds = _calculateBounds(polyline.points);
         mapController.animateCamera(
-          gmaps.CameraUpdate.newLatLngBounds(bounds, 100),
+          gmaps.CameraUpdate.newLatLngBounds(bounds, 300),
         );
       }
     }

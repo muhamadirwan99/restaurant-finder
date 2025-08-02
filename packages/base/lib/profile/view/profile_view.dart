@@ -1,4 +1,5 @@
 import 'package:base/profile/controller/profile_controller.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {
@@ -133,6 +134,30 @@ class ProfileView extends StatefulWidget {
                       controller.logout();
                     },
                   ),
+                  SwitchListTile(
+                    title: Text(
+                      'Dark Mode',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    subtitle: Text(
+                      'Switch between light and dark themes',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.grey.shade600,
+                          ),
+                    ),
+                    secondary: Icon(
+                      Icons.dark_mode_rounded,
+                      color: Colors.deepPurple.shade400,
+                    ),
+                    value: Theme.of(context).brightness == Brightness.dark,
+                    onChanged: (bool b) {
+                      ThemeData newTheme = b ? themeDataDark : themeDataLight;
+                      Get.changeTheme(newTheme);
+                    },
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 0),
+                  ),
                   const SizedBox(height: 32),
                   // App info footer
                   Center(
@@ -188,7 +213,6 @@ class ProfileView extends StatefulWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
